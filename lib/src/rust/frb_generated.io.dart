@@ -5,448 +5,320 @@
 
 import 'api/simple.dart';
 import 'api/tantivy_api.dart';
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi' as ffi;
-
 import 'frb_generated.dart';
-
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated_io.dart';
 
-abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
-  RustLibApiImplPlatform({
-    required super.handler,
-    required super.wire,
-    required super.generalizedFrbRustBinding,
-    required super.portManager,
-  });
 
-  @protected
-  AnyhowException dco_decode_AnyhowException(dynamic raw);
 
-  @protected
-  String dco_decode_String(dynamic raw);
 
-  @protected
-  bool dco_decode_bool(dynamic raw);
+                abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
+                  RustLibApiImplPlatform({
+                    required super.handler,
+                    required super.wire,
+                    required super.generalizedFrbRustBinding,
+                    required super.portManager,
+                  });
 
-  @protected
-  bool dco_decode_box_autoadd_bool(dynamic raw);
+                  
 
-  @protected
-  Document dco_decode_box_autoadd_document(dynamic raw);
+                  @protected AnyhowException dco_decode_AnyhowException(dynamic raw);
 
-  @protected
-  double dco_decode_box_autoadd_f_32(dynamic raw);
+@protected String dco_decode_String(dynamic raw);
 
-  @protected
-  TextRange dco_decode_box_autoadd_text_range(dynamic raw);
+@protected AlbumInfo dco_decode_album_info(dynamic raw);
 
-  @protected
-  int dco_decode_box_autoadd_u_32(dynamic raw);
+@protected bool dco_decode_bool(dynamic raw);
 
-  @protected
-  BigInt dco_decode_box_autoadd_u_64(dynamic raw);
+@protected bool dco_decode_box_autoadd_bool(dynamic raw);
 
-  @protected
-  int dco_decode_box_autoadd_u_8(dynamic raw);
+@protected Document dco_decode_box_autoadd_document(dynamic raw);
 
-  @protected
-  BigInt dco_decode_box_autoadd_usize(dynamic raw);
+@protected double dco_decode_box_autoadd_f_32(dynamic raw);
 
-  @protected
-  Document dco_decode_document(dynamic raw);
+@protected TextRange dco_decode_box_autoadd_text_range(dynamic raw);
 
-  @protected
-  double dco_decode_f_32(dynamic raw);
+@protected int dco_decode_box_autoadd_u_32(dynamic raw);
 
-  @protected
-  IndexSpaceUsage dco_decode_index_space_usage(dynamic raw);
+@protected BigInt dco_decode_box_autoadd_u_64(dynamic raw);
 
-  @protected
-  LenientSearchResponse dco_decode_lenient_search_response(dynamic raw);
+@protected int dco_decode_box_autoadd_u_8(dynamic raw);
 
-  @protected
-  List<String> dco_decode_list_String(dynamic raw);
+@protected BigInt dco_decode_box_autoadd_usize(dynamic raw);
 
-  @protected
-  List<Document> dco_decode_list_document(dynamic raw);
+@protected Document dco_decode_document(dynamic raw);
 
-  @protected
-  Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
+@protected double dco_decode_f_32(dynamic raw);
 
-  @protected
-  List<SearchResult> dco_decode_list_search_result(dynamic raw);
+@protected int dco_decode_i_32(dynamic raw);
 
-  @protected
-  List<TermSuggestion> dco_decode_list_term_suggestion(dynamic raw);
+@protected IndexSpaceUsage dco_decode_index_space_usage(dynamic raw);
 
-  @protected
-  List<TextRange> dco_decode_list_text_range(dynamic raw);
+@protected LenientSearchResponse dco_decode_lenient_search_response(dynamic raw);
 
-  @protected
-  String? dco_decode_opt_String(dynamic raw);
+@protected List<String> dco_decode_list_String(dynamic raw);
 
-  @protected
-  bool? dco_decode_opt_box_autoadd_bool(dynamic raw);
+@protected List<AlbumInfo> dco_decode_list_album_info(dynamic raw);
 
-  @protected
-  Document? dco_decode_opt_box_autoadd_document(dynamic raw);
+@protected List<Document> dco_decode_list_document(dynamic raw);
 
-  @protected
-  double? dco_decode_opt_box_autoadd_f_32(dynamic raw);
+@protected Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
-  @protected
-  TextRange? dco_decode_opt_box_autoadd_text_range(dynamic raw);
+@protected List<ScanState> dco_decode_list_scan_state(dynamic raw);
 
-  @protected
-  int? dco_decode_opt_box_autoadd_u_32(dynamic raw);
+@protected List<SearchResult> dco_decode_list_search_result(dynamic raw);
 
-  @protected
-  BigInt? dco_decode_opt_box_autoadd_u_64(dynamic raw);
+@protected List<TermSuggestion> dco_decode_list_term_suggestion(dynamic raw);
 
-  @protected
-  int? dco_decode_opt_box_autoadd_u_8(dynamic raw);
+@protected List<TextRange> dco_decode_list_text_range(dynamic raw);
 
-  @protected
-  BigInt? dco_decode_opt_box_autoadd_usize(dynamic raw);
+@protected String? dco_decode_opt_String(dynamic raw);
 
-  @protected
-  List<TextRange>? dco_decode_opt_list_text_range(dynamic raw);
+@protected bool? dco_decode_opt_box_autoadd_bool(dynamic raw);
 
-  @protected
-  SearchResponse dco_decode_search_response(dynamic raw);
+@protected Document? dco_decode_opt_box_autoadd_document(dynamic raw);
 
-  @protected
-  SearchResult dco_decode_search_result(dynamic raw);
+@protected double? dco_decode_opt_box_autoadd_f_32(dynamic raw);
 
-  @protected
-  TermSuggestion dco_decode_term_suggestion(dynamic raw);
+@protected TextRange? dco_decode_opt_box_autoadd_text_range(dynamic raw);
 
-  @protected
-  TextRange dco_decode_text_range(dynamic raw);
+@protected int? dco_decode_opt_box_autoadd_u_32(dynamic raw);
 
-  @protected
-  int dco_decode_u_32(dynamic raw);
+@protected BigInt? dco_decode_opt_box_autoadd_u_64(dynamic raw);
 
-  @protected
-  BigInt dco_decode_u_64(dynamic raw);
+@protected int? dco_decode_opt_box_autoadd_u_8(dynamic raw);
 
-  @protected
-  int dco_decode_u_8(dynamic raw);
+@protected BigInt? dco_decode_opt_box_autoadd_usize(dynamic raw);
 
-  @protected
-  void dco_decode_unit(dynamic raw);
+@protected List<TextRange>? dco_decode_opt_list_text_range(dynamic raw);
 
-  @protected
-  BigInt dco_decode_usize(dynamic raw);
+@protected ScanState dco_decode_scan_state(dynamic raw);
 
-  @protected
-  AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
+@protected SearchResponse dco_decode_search_response(dynamic raw);
 
-  @protected
-  String sse_decode_String(SseDeserializer deserializer);
+@protected SearchResult dco_decode_search_result(dynamic raw);
 
-  @protected
-  bool sse_decode_bool(SseDeserializer deserializer);
+@protected SortOrder dco_decode_sort_order(dynamic raw);
 
-  @protected
-  bool sse_decode_box_autoadd_bool(SseDeserializer deserializer);
+@protected TermSuggestion dco_decode_term_suggestion(dynamic raw);
 
-  @protected
-  Document sse_decode_box_autoadd_document(SseDeserializer deserializer);
+@protected TextRange dco_decode_text_range(dynamic raw);
 
-  @protected
-  double sse_decode_box_autoadd_f_32(SseDeserializer deserializer);
+@protected int dco_decode_u_32(dynamic raw);
 
-  @protected
-  TextRange sse_decode_box_autoadd_text_range(SseDeserializer deserializer);
+@protected BigInt dco_decode_u_64(dynamic raw);
 
-  @protected
-  int sse_decode_box_autoadd_u_32(SseDeserializer deserializer);
+@protected int dco_decode_u_8(dynamic raw);
 
-  @protected
-  BigInt sse_decode_box_autoadd_u_64(SseDeserializer deserializer);
+@protected void dco_decode_unit(dynamic raw);
 
-  @protected
-  int sse_decode_box_autoadd_u_8(SseDeserializer deserializer);
+@protected BigInt dco_decode_usize(dynamic raw);
 
-  @protected
-  BigInt sse_decode_box_autoadd_usize(SseDeserializer deserializer);
+@protected AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
 
-  @protected
-  Document sse_decode_document(SseDeserializer deserializer);
+@protected String sse_decode_String(SseDeserializer deserializer);
 
-  @protected
-  double sse_decode_f_32(SseDeserializer deserializer);
+@protected AlbumInfo sse_decode_album_info(SseDeserializer deserializer);
 
-  @protected
-  IndexSpaceUsage sse_decode_index_space_usage(SseDeserializer deserializer);
+@protected bool sse_decode_bool(SseDeserializer deserializer);
 
-  @protected
-  LenientSearchResponse sse_decode_lenient_search_response(
-    SseDeserializer deserializer,
-  );
+@protected bool sse_decode_box_autoadd_bool(SseDeserializer deserializer);
 
-  @protected
-  List<String> sse_decode_list_String(SseDeserializer deserializer);
+@protected Document sse_decode_box_autoadd_document(SseDeserializer deserializer);
 
-  @protected
-  List<Document> sse_decode_list_document(SseDeserializer deserializer);
+@protected double sse_decode_box_autoadd_f_32(SseDeserializer deserializer);
 
-  @protected
-  Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
+@protected TextRange sse_decode_box_autoadd_text_range(SseDeserializer deserializer);
 
-  @protected
-  List<SearchResult> sse_decode_list_search_result(
-    SseDeserializer deserializer,
-  );
+@protected int sse_decode_box_autoadd_u_32(SseDeserializer deserializer);
 
-  @protected
-  List<TermSuggestion> sse_decode_list_term_suggestion(
-    SseDeserializer deserializer,
-  );
+@protected BigInt sse_decode_box_autoadd_u_64(SseDeserializer deserializer);
 
-  @protected
-  List<TextRange> sse_decode_list_text_range(SseDeserializer deserializer);
+@protected int sse_decode_box_autoadd_u_8(SseDeserializer deserializer);
 
-  @protected
-  String? sse_decode_opt_String(SseDeserializer deserializer);
+@protected BigInt sse_decode_box_autoadd_usize(SseDeserializer deserializer);
 
-  @protected
-  bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer);
+@protected Document sse_decode_document(SseDeserializer deserializer);
 
-  @protected
-  Document? sse_decode_opt_box_autoadd_document(SseDeserializer deserializer);
+@protected double sse_decode_f_32(SseDeserializer deserializer);
 
-  @protected
-  double? sse_decode_opt_box_autoadd_f_32(SseDeserializer deserializer);
+@protected int sse_decode_i_32(SseDeserializer deserializer);
 
-  @protected
-  TextRange? sse_decode_opt_box_autoadd_text_range(
-    SseDeserializer deserializer,
-  );
+@protected IndexSpaceUsage sse_decode_index_space_usage(SseDeserializer deserializer);
 
-  @protected
-  int? sse_decode_opt_box_autoadd_u_32(SseDeserializer deserializer);
+@protected LenientSearchResponse sse_decode_lenient_search_response(SseDeserializer deserializer);
 
-  @protected
-  BigInt? sse_decode_opt_box_autoadd_u_64(SseDeserializer deserializer);
+@protected List<String> sse_decode_list_String(SseDeserializer deserializer);
 
-  @protected
-  int? sse_decode_opt_box_autoadd_u_8(SseDeserializer deserializer);
+@protected List<AlbumInfo> sse_decode_list_album_info(SseDeserializer deserializer);
 
-  @protected
-  BigInt? sse_decode_opt_box_autoadd_usize(SseDeserializer deserializer);
+@protected List<Document> sse_decode_list_document(SseDeserializer deserializer);
 
-  @protected
-  List<TextRange>? sse_decode_opt_list_text_range(SseDeserializer deserializer);
+@protected Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
-  @protected
-  SearchResponse sse_decode_search_response(SseDeserializer deserializer);
+@protected List<ScanState> sse_decode_list_scan_state(SseDeserializer deserializer);
 
-  @protected
-  SearchResult sse_decode_search_result(SseDeserializer deserializer);
+@protected List<SearchResult> sse_decode_list_search_result(SseDeserializer deserializer);
 
-  @protected
-  TermSuggestion sse_decode_term_suggestion(SseDeserializer deserializer);
+@protected List<TermSuggestion> sse_decode_list_term_suggestion(SseDeserializer deserializer);
 
-  @protected
-  TextRange sse_decode_text_range(SseDeserializer deserializer);
+@protected List<TextRange> sse_decode_list_text_range(SseDeserializer deserializer);
 
-  @protected
-  int sse_decode_u_32(SseDeserializer deserializer);
+@protected String? sse_decode_opt_String(SseDeserializer deserializer);
 
-  @protected
-  BigInt sse_decode_u_64(SseDeserializer deserializer);
+@protected bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer);
 
-  @protected
-  int sse_decode_u_8(SseDeserializer deserializer);
+@protected Document? sse_decode_opt_box_autoadd_document(SseDeserializer deserializer);
 
-  @protected
-  void sse_decode_unit(SseDeserializer deserializer);
+@protected double? sse_decode_opt_box_autoadd_f_32(SseDeserializer deserializer);
 
-  @protected
-  BigInt sse_decode_usize(SseDeserializer deserializer);
+@protected TextRange? sse_decode_opt_box_autoadd_text_range(SseDeserializer deserializer);
 
-  @protected
-  int sse_decode_i_32(SseDeserializer deserializer);
+@protected int? sse_decode_opt_box_autoadd_u_32(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_AnyhowException(
-    AnyhowException self,
-    SseSerializer serializer,
-  );
+@protected BigInt? sse_decode_opt_box_autoadd_u_64(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_String(String self, SseSerializer serializer);
+@protected int? sse_decode_opt_box_autoadd_u_8(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_bool(bool self, SseSerializer serializer);
+@protected BigInt? sse_decode_opt_box_autoadd_usize(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_bool(bool self, SseSerializer serializer);
+@protected List<TextRange>? sse_decode_opt_list_text_range(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_document(Document self, SseSerializer serializer);
+@protected ScanState sse_decode_scan_state(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_f_32(double self, SseSerializer serializer);
+@protected SearchResponse sse_decode_search_response(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_text_range(
-    TextRange self,
-    SseSerializer serializer,
-  );
+@protected SearchResult sse_decode_search_result(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_u_32(int self, SseSerializer serializer);
+@protected SortOrder sse_decode_sort_order(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_u_64(BigInt self, SseSerializer serializer);
+@protected TermSuggestion sse_decode_term_suggestion(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_u_8(int self, SseSerializer serializer);
+@protected TextRange sse_decode_text_range(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_box_autoadd_usize(BigInt self, SseSerializer serializer);
+@protected int sse_decode_u_32(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_document(Document self, SseSerializer serializer);
+@protected BigInt sse_decode_u_64(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_f_32(double self, SseSerializer serializer);
+@protected int sse_decode_u_8(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_index_space_usage(
-    IndexSpaceUsage self,
-    SseSerializer serializer,
-  );
+@protected void sse_decode_unit(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_lenient_search_response(
-    LenientSearchResponse self,
-    SseSerializer serializer,
-  );
+@protected BigInt sse_decode_usize(SseDeserializer deserializer);
 
-  @protected
-  void sse_encode_list_String(List<String> self, SseSerializer serializer);
+@protected void sse_encode_AnyhowException(AnyhowException self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_list_document(List<Document> self, SseSerializer serializer);
+@protected void sse_encode_String(String self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_list_prim_u_8_strict(
-    Uint8List self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_album_info(AlbumInfo self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_list_search_result(
-    List<SearchResult> self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_bool(bool self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_list_term_suggestion(
-    List<TermSuggestion> self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_box_autoadd_bool(bool self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_list_text_range(
-    List<TextRange> self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_box_autoadd_document(Document self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_String(String? self, SseSerializer serializer);
+@protected void sse_encode_box_autoadd_f_32(double self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer);
+@protected void sse_encode_box_autoadd_text_range(TextRange self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_document(
-    Document? self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_box_autoadd_u_32(int self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_f_32(double? self, SseSerializer serializer);
+@protected void sse_encode_box_autoadd_u_64(BigInt self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_text_range(
-    TextRange? self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_box_autoadd_u_8(int self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_u_32(int? self, SseSerializer serializer);
+@protected void sse_encode_box_autoadd_usize(BigInt self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_u_64(BigInt? self, SseSerializer serializer);
+@protected void sse_encode_document(Document self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_u_8(int? self, SseSerializer serializer);
+@protected void sse_encode_f_32(double self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_box_autoadd_usize(BigInt? self, SseSerializer serializer);
+@protected void sse_encode_i_32(int self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_opt_list_text_range(
-    List<TextRange>? self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_index_space_usage(IndexSpaceUsage self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_search_response(
-    SearchResponse self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_lenient_search_response(LenientSearchResponse self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_search_result(SearchResult self, SseSerializer serializer);
+@protected void sse_encode_list_String(List<String> self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_term_suggestion(
-    TermSuggestion self,
-    SseSerializer serializer,
-  );
+@protected void sse_encode_list_album_info(List<AlbumInfo> self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_text_range(TextRange self, SseSerializer serializer);
+@protected void sse_encode_list_document(List<Document> self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_u_32(int self, SseSerializer serializer);
+@protected void sse_encode_list_prim_u_8_strict(Uint8List self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_u_64(BigInt self, SseSerializer serializer);
+@protected void sse_encode_list_scan_state(List<ScanState> self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_u_8(int self, SseSerializer serializer);
+@protected void sse_encode_list_search_result(List<SearchResult> self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_unit(void self, SseSerializer serializer);
+@protected void sse_encode_list_term_suggestion(List<TermSuggestion> self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_usize(BigInt self, SseSerializer serializer);
+@protected void sse_encode_list_text_range(List<TextRange> self, SseSerializer serializer);
 
-  @protected
-  void sse_encode_i_32(int self, SseSerializer serializer);
-}
+@protected void sse_encode_opt_String(String? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_document(Document? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_f_32(double? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_text_range(TextRange? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_u_32(int? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_u_64(BigInt? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_u_8(int? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_box_autoadd_usize(BigInt? self, SseSerializer serializer);
+
+@protected void sse_encode_opt_list_text_range(List<TextRange>? self, SseSerializer serializer);
+
+@protected void sse_encode_scan_state(ScanState self, SseSerializer serializer);
+
+@protected void sse_encode_search_response(SearchResponse self, SseSerializer serializer);
+
+@protected void sse_encode_search_result(SearchResult self, SseSerializer serializer);
+
+@protected void sse_encode_sort_order(SortOrder self, SseSerializer serializer);
+
+@protected void sse_encode_term_suggestion(TermSuggestion self, SseSerializer serializer);
+
+@protected void sse_encode_text_range(TextRange self, SseSerializer serializer);
+
+@protected void sse_encode_u_32(int self, SseSerializer serializer);
+
+@protected void sse_encode_u_64(BigInt self, SseSerializer serializer);
+
+@protected void sse_encode_u_8(int self, SseSerializer serializer);
+
+@protected void sse_encode_unit(void self, SseSerializer serializer);
+
+@protected void sse_encode_usize(BigInt self, SseSerializer serializer);
+                }
+                
+
 
 // Section: wire_class
 
-class RustLibWire implements BaseWire {
-  factory RustLibWire.fromExternalLibrary(ExternalLibrary lib) =>
-      RustLibWire(lib.ffiDynamicLibrary);
 
-  /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-  _lookup;
+        class RustLibWire implements BaseWire {
 
-  /// The symbols are looked up in [dynamicLibrary].
-  RustLibWire(ffi.DynamicLibrary dynamicLibrary)
-    : _lookup = dynamicLibrary.lookup;
-}
+            factory RustLibWire.fromExternalLibrary(ExternalLibrary lib) =>
+              RustLibWire(lib.ffiDynamicLibrary);
+        
+            /// Holds the symbol lookup function.
+            final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+                _lookup;
+  
+            /// The symbols are looked up in [dynamicLibrary].
+            RustLibWire(ffi.DynamicLibrary dynamicLibrary)
+                : _lookup = dynamicLibrary.lookup;
+
+            
+        }
+        

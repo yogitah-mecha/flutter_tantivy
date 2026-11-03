@@ -39,7 +39,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.13.0";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -707720866;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -667244317;
 
 // Section: executor
 
@@ -270,12 +270,12 @@ fn wire__crate__api__tantivy_api__delete_document_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_id = <String>::sse_decode(&mut deserializer);
+            let api_path = <String>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| {
                 transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
                     (move || {
-                        let output_ok = crate::api::tantivy_api::delete_document(api_id)?;
+                        let output_ok = crate::api::tantivy_api::delete_document(api_path)?;
                         std::result::Result::Ok(output_ok)
                     })(),
                 )
@@ -305,12 +305,13 @@ fn wire__crate__api__tantivy_api__delete_document_no_commit_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_id = <String>::sse_decode(&mut deserializer);
+            let api_path = <String>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| {
                 transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
                     (move || {
-                        let output_ok = crate::api::tantivy_api::delete_document_no_commit(api_id)?;
+                        let output_ok =
+                            crate::api::tantivy_api::delete_document_no_commit(api_path)?;
                         std::result::Result::Ok(output_ok)
                     })(),
                 )
@@ -340,12 +341,12 @@ fn wire__crate__api__tantivy_api__delete_documents_batch_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_ids = <Vec<String>>::sse_decode(&mut deserializer);
+            let api_paths = <Vec<String>>::sse_decode(&mut deserializer);
             deserializer.end();
             move |context| {
                 transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
                     (move || {
-                        let output_ok = crate::api::tantivy_api::delete_documents_batch(api_ids)?;
+                        let output_ok = crate::api::tantivy_api::delete_documents_batch(api_paths)?;
                         std::result::Result::Ok(output_ok)
                     })(),
                 )
@@ -353,14 +354,14 @@ fn wire__crate__api__tantivy_api__delete_documents_batch_impl(
         },
     )
 }
-fn wire__crate__api__tantivy_api__get_document_by_id_impl(
+fn wire__crate__api__tantivy_api__get_document_by_path_impl(
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
     rust_vec_len_: i32,
     data_len_: i32,
 ) -> flutter_rust_bridge::for_generated::WireSyncRust2DartSse {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap_sync::<flutter_rust_bridge::for_generated::SseCodec, _>(
         flutter_rust_bridge::for_generated::TaskInfo {
-            debug_name: "get_document_by_id",
+            debug_name: "get_document_by_path",
             port: None,
             mode: flutter_rust_bridge::for_generated::FfiCallMode::Sync,
         },
@@ -374,14 +375,49 @@ fn wire__crate__api__tantivy_api__get_document_by_id_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_id = <String>::sse_decode(&mut deserializer);
+            let api_path = <String>::sse_decode(&mut deserializer);
             deserializer.end();
             transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
                 (move || {
-                    let output_ok = crate::api::tantivy_api::get_document_by_id(api_id)?;
+                    let output_ok = crate::api::tantivy_api::get_document_by_path(api_path)?;
                     std::result::Result::Ok(output_ok)
                 })(),
             )
+        },
+    )
+}
+fn wire__crate__api__tantivy_api__get_documents_by_paths_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "get_documents_by_paths",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_paths = <Vec<String>>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || {
+                        let output_ok = crate::api::tantivy_api::get_documents_by_paths(api_paths)?;
+                        std::result::Result::Ok(output_ok)
+                    })(),
+                )
+            }
         },
     )
 }
@@ -444,6 +480,40 @@ fn wire__crate__api__tantivy_api__get_num_docs_impl(
                     std::result::Result::Ok(output_ok)
                 })(),
             )
+        },
+    )
+}
+fn wire__crate__api__tantivy_api__get_scan_states_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "get_scan_states",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || {
+                        let output_ok = crate::api::tantivy_api::get_scan_states()?;
+                        std::result::Result::Ok(output_ok)
+                    })(),
+                )
+            }
         },
     )
 }
@@ -542,6 +612,116 @@ fn wire__crate__api__tantivy_api__init_tantivy_impl(
                     std::result::Result::Ok(output_ok)
                 })(),
             )
+        },
+    )
+}
+fn wire__crate__api__tantivy_api__list_album_documents_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "list_album_documents",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_artist = <String>::sse_decode(&mut deserializer);
+            let api_album = <String>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || {
+                        let output_ok =
+                            crate::api::tantivy_api::list_album_documents(api_artist, api_album)?;
+                        std::result::Result::Ok(output_ok)
+                    })(),
+                )
+            }
+        },
+    )
+}
+fn wire__crate__api__tantivy_api__list_albums_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "list_albums",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || {
+                        let output_ok = crate::api::tantivy_api::list_albums()?;
+                        std::result::Result::Ok(output_ok)
+                    })(),
+                )
+            }
+        },
+    )
+}
+fn wire__crate__api__tantivy_api__list_documents_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "list_documents",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_offset = <usize>::sse_decode(&mut deserializer);
+            let api_limit = <usize>::sse_decode(&mut deserializer);
+            let api_sort = <crate::api::tantivy_api::SortOrder>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || {
+                        let output_ok = crate::api::tantivy_api::list_documents(
+                            api_offset, api_limit, api_sort,
+                        )?;
+                        std::result::Result::Ok(output_ok)
+                    })(),
+                )
+            }
         },
     )
 }
@@ -756,6 +936,43 @@ fn wire__crate__api__tantivy_api__search_documents_lenient_impl(
         },
     )
 }
+fn wire__crate__api__tantivy_api__search_documents_prefix_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_normal::<flutter_rust_bridge::for_generated::SseCodec, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "search_documents_prefix",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_query = <String>::sse_decode(&mut deserializer);
+            let api_top_k = <usize>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| {
+                transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
+                    (move || {
+                        let output_ok =
+                            crate::api::tantivy_api::search_documents_prefix(api_query, api_top_k)?;
+                        std::result::Result::Ok(output_ok)
+                    })(),
+                )
+            }
+        },
+    )
+}
 fn wire__crate__api__tantivy_api__search_documents_regex_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
@@ -868,7 +1085,7 @@ fn wire__crate__api__tantivy_api__search_similar_documents_impl(
             };
             let mut deserializer =
                 flutter_rust_bridge::for_generated::SseDeserializer::new(message);
-            let api_id = <String>::sse_decode(&mut deserializer);
+            let api_path = <String>::sse_decode(&mut deserializer);
             let api_top_k = <usize>::sse_decode(&mut deserializer);
             let api_min_doc_frequency = <Option<u64>>::sse_decode(&mut deserializer);
             let api_max_doc_frequency = <Option<u64>>::sse_decode(&mut deserializer);
@@ -881,7 +1098,7 @@ fn wire__crate__api__tantivy_api__search_similar_documents_impl(
                 transform_result_sse::<_, flutter_rust_bridge::for_generated::anyhow::Error>(
                     (move || {
                         let output_ok = crate::api::tantivy_api::search_similar_documents(
-                            api_id,
+                            api_path,
                             api_top_k,
                             api_min_doc_frequency,
                             api_max_doc_frequency,
@@ -992,6 +1209,20 @@ impl SseDecode for String {
     }
 }
 
+impl SseDecode for crate::api::tantivy_api::AlbumInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_artist = <String>::sse_decode(deserializer);
+        let mut var_album = <String>::sse_decode(deserializer);
+        let mut var_trackCount = <u64>::sse_decode(deserializer);
+        return crate::api::tantivy_api::AlbumInfo {
+            artist: var_artist,
+            album: var_album,
+            track_count: var_trackCount,
+        };
+    }
+}
+
 impl SseDecode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -1002,13 +1233,27 @@ impl SseDecode for bool {
 impl SseDecode for crate::api::tantivy_api::Document {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_id = <String>::sse_decode(deserializer);
-        let mut var_title = <Option<String>>::sse_decode(deserializer);
-        let mut var_text = <String>::sse_decode(deserializer);
+        let mut var_path = <String>::sse_decode(deserializer);
+        let mut var_uid = <String>::sse_decode(deserializer);
+        let mut var_title = <String>::sse_decode(deserializer);
+        let mut var_artist = <String>::sse_decode(deserializer);
+        let mut var_album = <Option<String>>::sse_decode(deserializer);
+        let mut var_durationMs = <Option<u64>>::sse_decode(deserializer);
+        let mut var_mtime = <u64>::sse_decode(deserializer);
+        let mut var_size = <u64>::sse_decode(deserializer);
+        let mut var_artworkBase64 = <Option<String>>::sse_decode(deserializer);
+        let mut var_lastScannedAt = <u64>::sse_decode(deserializer);
         return crate::api::tantivy_api::Document {
-            id: var_id,
+            path: var_path,
+            uid: var_uid,
             title: var_title,
-            text: var_text,
+            artist: var_artist,
+            album: var_album,
+            duration_ms: var_durationMs,
+            mtime: var_mtime,
+            size: var_size,
+            artwork_base64: var_artworkBase64,
+            last_scanned_at: var_lastScannedAt,
         };
     }
 }
@@ -1017,6 +1262,13 @@ impl SseDecode for f32 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         deserializer.cursor.read_f32::<NativeEndian>().unwrap()
+    }
+}
+
+impl SseDecode for i32 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        deserializer.cursor.read_i32::<NativeEndian>().unwrap()
     }
 }
 
@@ -1075,6 +1327,20 @@ impl SseDecode for Vec<String> {
     }
 }
 
+impl SseDecode for Vec<crate::api::tantivy_api::AlbumInfo> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::tantivy_api::AlbumInfo>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
 impl SseDecode for Vec<crate::api::tantivy_api::Document> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -1096,6 +1362,20 @@ impl SseDecode for Vec<u8> {
         let mut ans_ = Vec::with_capacity(len_ as usize);
         for idx_ in 0..len_ {
             ans_.push(<u8>::sse_decode(deserializer));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::tantivy_api::ScanState> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = Vec::with_capacity(len_ as usize);
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::tantivy_api::ScanState>::sse_decode(
+                deserializer,
+            ));
         }
         return ans_;
     }
@@ -1259,6 +1539,22 @@ impl SseDecode for Option<Vec<crate::api::tantivy_api::TextRange>> {
     }
 }
 
+impl SseDecode for crate::api::tantivy_api::ScanState {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_path = <String>::sse_decode(deserializer);
+        let mut var_mtime = <u64>::sse_decode(deserializer);
+        let mut var_size = <u64>::sse_decode(deserializer);
+        let mut var_lastScannedAt = <u64>::sse_decode(deserializer);
+        return crate::api::tantivy_api::ScanState {
+            path: var_path,
+            mtime: var_mtime,
+            size: var_size,
+            last_scanned_at: var_lastScannedAt,
+        };
+    }
+}
+
 impl SseDecode for crate::api::tantivy_api::SearchResponse {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -1278,7 +1574,8 @@ impl SseDecode for crate::api::tantivy_api::SearchResult {
         let mut var_score = <f32>::sse_decode(deserializer);
         let mut var_doc = <crate::api::tantivy_api::Document>::sse_decode(deserializer);
         let mut var_snippet = <Option<String>>::sse_decode(deserializer);
-        let mut var_titleSnippet = <Option<String>>::sse_decode(deserializer);
+        let mut var_artistSnippet = <Option<String>>::sse_decode(deserializer);
+        let mut var_albumSnippet = <Option<String>>::sse_decode(deserializer);
         let mut var_fragmentRange =
             <Option<crate::api::tantivy_api::TextRange>>::sse_decode(deserializer);
         let mut var_highlightedRanges =
@@ -1287,9 +1584,22 @@ impl SseDecode for crate::api::tantivy_api::SearchResult {
             score: var_score,
             doc: var_doc,
             snippet: var_snippet,
-            title_snippet: var_titleSnippet,
+            artist_snippet: var_artistSnippet,
+            album_snippet: var_albumSnippet,
             fragment_range: var_fragmentRange,
             highlighted_ranges: var_highlightedRanges,
+        };
+    }
+}
+
+impl SseDecode for crate::api::tantivy_api::SortOrder {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut inner = <i32>::sse_decode(deserializer);
+        return match inner {
+            0 => crate::api::tantivy_api::SortOrder::Title,
+            1 => crate::api::tantivy_api::SortOrder::Artist,
+            _ => unreachable!("Invalid variant for SortOrder: {}", inner),
         };
     }
 }
@@ -1351,13 +1661,6 @@ impl SseDecode for usize {
     }
 }
 
-impl SseDecode for i32 {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        deserializer.cursor.read_i32::<NativeEndian>().unwrap()
-    }
-}
-
 fn pde_ffi_dispatcher_primary_impl(
     func_id: i32,
     port: flutter_rust_bridge::for_generated::MessagePort,
@@ -1399,48 +1702,71 @@ fn pde_ffi_dispatcher_primary_impl(
             rust_vec_len,
             data_len,
         ),
-        14 => wire__crate__api__simple__init_app_impl(port, ptr, rust_vec_len, data_len),
-        17 => {
+        11 => wire__crate__api__tantivy_api__get_documents_by_paths_impl(
+            port,
+            ptr,
+            rust_vec_len,
+            data_len,
+        ),
+        14 => {
+            wire__crate__api__tantivy_api__get_scan_states_impl(port, ptr, rust_vec_len, data_len)
+        }
+        16 => wire__crate__api__simple__init_app_impl(port, ptr, rust_vec_len, data_len),
+        18 => wire__crate__api__tantivy_api__list_album_documents_impl(
+            port,
+            ptr,
+            rust_vec_len,
+            data_len,
+        ),
+        19 => wire__crate__api__tantivy_api__list_albums_impl(port, ptr, rust_vec_len, data_len),
+        20 => wire__crate__api__tantivy_api__list_documents_impl(port, ptr, rust_vec_len, data_len),
+        22 => {
             wire__crate__api__tantivy_api__search_documents_impl(port, ptr, rust_vec_len, data_len)
         }
-        18 => wire__crate__api__tantivy_api__search_documents_exists_impl(
+        23 => wire__crate__api__tantivy_api__search_documents_exists_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        19 => wire__crate__api__tantivy_api__search_documents_fuzzy_impl(
+        24 => wire__crate__api__tantivy_api__search_documents_fuzzy_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        20 => wire__crate__api__tantivy_api__search_documents_lenient_impl(
+        25 => wire__crate__api__tantivy_api__search_documents_lenient_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        21 => wire__crate__api__tantivy_api__search_documents_regex_impl(
+        26 => wire__crate__api__tantivy_api__search_documents_prefix_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        22 => wire__crate__api__tantivy_api__search_documents_regex_phrase_impl(
+        27 => wire__crate__api__tantivy_api__search_documents_regex_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        23 => wire__crate__api__tantivy_api__search_similar_documents_impl(
+        28 => wire__crate__api__tantivy_api__search_documents_regex_phrase_impl(
             port,
             ptr,
             rust_vec_len,
             data_len,
         ),
-        24 => wire__crate__api__tantivy_api__suggest_terms_impl(port, ptr, rust_vec_len, data_len),
-        25 => {
+        29 => wire__crate__api__tantivy_api__search_similar_documents_impl(
+            port,
+            ptr,
+            rust_vec_len,
+            data_len,
+        ),
+        30 => wire__crate__api__tantivy_api__suggest_terms_impl(port, ptr, rust_vec_len, data_len),
+        31 => {
             wire__crate__api__tantivy_api__update_document_impl(port, ptr, rust_vec_len, data_len)
         }
         _ => unreachable!(),
@@ -1457,14 +1783,14 @@ fn pde_ffi_dispatcher_sync_impl(
     match func_id {
         4 => wire__crate__api__tantivy_api__close_tantivy_impl(ptr, rust_vec_len, data_len),
         5 => wire__crate__api__tantivy_api__commit_impl(ptr, rust_vec_len, data_len),
-        10 => wire__crate__api__tantivy_api__get_document_by_id_impl(ptr, rust_vec_len, data_len),
-        11 => {
+        10 => wire__crate__api__tantivy_api__get_document_by_path_impl(ptr, rust_vec_len, data_len),
+        12 => {
             wire__crate__api__tantivy_api__get_index_space_usage_impl(ptr, rust_vec_len, data_len)
         }
-        12 => wire__crate__api__tantivy_api__get_num_docs_impl(ptr, rust_vec_len, data_len),
-        13 => wire__crate__api__simple__greet_impl(ptr, rust_vec_len, data_len),
-        15 => wire__crate__api__tantivy_api__init_tantivy_impl(ptr, rust_vec_len, data_len),
-        16 => wire__crate__api__tantivy_api__list_index_segment_files_impl(
+        13 => wire__crate__api__tantivy_api__get_num_docs_impl(ptr, rust_vec_len, data_len),
+        15 => wire__crate__api__simple__greet_impl(ptr, rust_vec_len, data_len),
+        17 => wire__crate__api__tantivy_api__init_tantivy_impl(ptr, rust_vec_len, data_len),
+        21 => wire__crate__api__tantivy_api__list_index_segment_files_impl(
             ptr,
             rust_vec_len,
             data_len,
@@ -1476,12 +1802,41 @@ fn pde_ffi_dispatcher_sync_impl(
 // Section: rust2dart
 
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::tantivy_api::AlbumInfo {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.artist.into_into_dart().into_dart(),
+            self.album.into_into_dart().into_dart(),
+            self.track_count.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::tantivy_api::AlbumInfo
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::tantivy_api::AlbumInfo>
+    for crate::api::tantivy_api::AlbumInfo
+{
+    fn into_into_dart(self) -> crate::api::tantivy_api::AlbumInfo {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::api::tantivy_api::Document {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
-            self.id.into_into_dart().into_dart(),
+            self.path.into_into_dart().into_dart(),
+            self.uid.into_into_dart().into_dart(),
             self.title.into_into_dart().into_dart(),
-            self.text.into_into_dart().into_dart(),
+            self.artist.into_into_dart().into_dart(),
+            self.album.into_into_dart().into_dart(),
+            self.duration_ms.into_into_dart().into_dart(),
+            self.mtime.into_into_dart().into_dart(),
+            self.size.into_into_dart().into_dart(),
+            self.artwork_base64.into_into_dart().into_dart(),
+            self.last_scanned_at.into_into_dart().into_dart(),
         ]
         .into_dart()
     }
@@ -1549,6 +1904,29 @@ impl flutter_rust_bridge::IntoIntoDart<crate::api::tantivy_api::LenientSearchRes
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::tantivy_api::ScanState {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.path.into_into_dart().into_dart(),
+            self.mtime.into_into_dart().into_dart(),
+            self.size.into_into_dart().into_dart(),
+            self.last_scanned_at.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::tantivy_api::ScanState
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::tantivy_api::ScanState>
+    for crate::api::tantivy_api::ScanState
+{
+    fn into_into_dart(self) -> crate::api::tantivy_api::ScanState {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
 impl flutter_rust_bridge::IntoDart for crate::api::tantivy_api::SearchResponse {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
@@ -1576,7 +1954,8 @@ impl flutter_rust_bridge::IntoDart for crate::api::tantivy_api::SearchResult {
             self.score.into_into_dart().into_dart(),
             self.doc.into_into_dart().into_dart(),
             self.snippet.into_into_dart().into_dart(),
-            self.title_snippet.into_into_dart().into_dart(),
+            self.artist_snippet.into_into_dart().into_dart(),
+            self.album_snippet.into_into_dart().into_dart(),
             self.fragment_range.into_into_dart().into_dart(),
             self.highlighted_ranges.into_into_dart().into_dart(),
         ]
@@ -1591,6 +1970,27 @@ impl flutter_rust_bridge::IntoIntoDart<crate::api::tantivy_api::SearchResult>
     for crate::api::tantivy_api::SearchResult
 {
     fn into_into_dart(self) -> crate::api::tantivy_api::SearchResult {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::tantivy_api::SortOrder {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        match self {
+            Self::Title => 0.into_dart(),
+            Self::Artist => 1.into_dart(),
+            _ => unreachable!(),
+        }
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::tantivy_api::SortOrder
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::tantivy_api::SortOrder>
+    for crate::api::tantivy_api::SortOrder
+{
+    fn into_into_dart(self) -> crate::api::tantivy_api::SortOrder {
         self
     }
 }
@@ -1651,6 +2051,15 @@ impl SseEncode for String {
     }
 }
 
+impl SseEncode for crate::api::tantivy_api::AlbumInfo {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.artist, serializer);
+        <String>::sse_encode(self.album, serializer);
+        <u64>::sse_encode(self.track_count, serializer);
+    }
+}
+
 impl SseEncode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -1661,9 +2070,16 @@ impl SseEncode for bool {
 impl SseEncode for crate::api::tantivy_api::Document {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.id, serializer);
-        <Option<String>>::sse_encode(self.title, serializer);
-        <String>::sse_encode(self.text, serializer);
+        <String>::sse_encode(self.path, serializer);
+        <String>::sse_encode(self.uid, serializer);
+        <String>::sse_encode(self.title, serializer);
+        <String>::sse_encode(self.artist, serializer);
+        <Option<String>>::sse_encode(self.album, serializer);
+        <Option<u64>>::sse_encode(self.duration_ms, serializer);
+        <u64>::sse_encode(self.mtime, serializer);
+        <u64>::sse_encode(self.size, serializer);
+        <Option<String>>::sse_encode(self.artwork_base64, serializer);
+        <u64>::sse_encode(self.last_scanned_at, serializer);
     }
 }
 
@@ -1671,6 +2087,13 @@ impl SseEncode for f32 {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         serializer.cursor.write_f32::<NativeEndian>(self).unwrap();
+    }
+}
+
+impl SseEncode for i32 {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        serializer.cursor.write_i32::<NativeEndian>(self).unwrap();
     }
 }
 
@@ -1709,6 +2132,16 @@ impl SseEncode for Vec<String> {
     }
 }
 
+impl SseEncode for Vec<crate::api::tantivy_api::AlbumInfo> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::tantivy_api::AlbumInfo>::sse_encode(item, serializer);
+        }
+    }
+}
+
 impl SseEncode for Vec<crate::api::tantivy_api::Document> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -1725,6 +2158,16 @@ impl SseEncode for Vec<u8> {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
             <u8>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::tantivy_api::ScanState> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::tantivy_api::ScanState>::sse_encode(item, serializer);
         }
     }
 }
@@ -1859,6 +2302,16 @@ impl SseEncode for Option<Vec<crate::api::tantivy_api::TextRange>> {
     }
 }
 
+impl SseEncode for crate::api::tantivy_api::ScanState {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.path, serializer);
+        <u64>::sse_encode(self.mtime, serializer);
+        <u64>::sse_encode(self.size, serializer);
+        <u64>::sse_encode(self.last_scanned_at, serializer);
+    }
+}
+
 impl SseEncode for crate::api::tantivy_api::SearchResponse {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -1873,10 +2326,27 @@ impl SseEncode for crate::api::tantivy_api::SearchResult {
         <f32>::sse_encode(self.score, serializer);
         <crate::api::tantivy_api::Document>::sse_encode(self.doc, serializer);
         <Option<String>>::sse_encode(self.snippet, serializer);
-        <Option<String>>::sse_encode(self.title_snippet, serializer);
+        <Option<String>>::sse_encode(self.artist_snippet, serializer);
+        <Option<String>>::sse_encode(self.album_snippet, serializer);
         <Option<crate::api::tantivy_api::TextRange>>::sse_encode(self.fragment_range, serializer);
         <Option<Vec<crate::api::tantivy_api::TextRange>>>::sse_encode(
             self.highlighted_ranges,
+            serializer,
+        );
+    }
+}
+
+impl SseEncode for crate::api::tantivy_api::SortOrder {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(
+            match self {
+                crate::api::tantivy_api::SortOrder::Title => 0,
+                crate::api::tantivy_api::SortOrder::Artist => 1,
+                _ => {
+                    unimplemented!("");
+                }
+            },
             serializer,
         );
     }
@@ -1931,13 +2401,6 @@ impl SseEncode for usize {
             .cursor
             .write_u64::<NativeEndian>(self as _)
             .unwrap();
-    }
-}
-
-impl SseEncode for i32 {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        serializer.cursor.write_i32::<NativeEndian>(self).unwrap();
     }
 }
 

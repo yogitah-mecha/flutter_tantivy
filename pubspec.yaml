@@ -4,7 +4,7 @@ version: 2026.10.17
 homepage: https://github.com/JAICHANGPARK/flutter_tantivy
 
 environment:
-  sdk: ^3.13.5
+  sdk: ^3.13.0
   flutter: '>=3.47.0'
 
 dependencies:
@@ -46,6 +46,8 @@ flutter:
       ios:
         ffiPlugin: true
       linux:
+        ffiPlugin: true
+      elinux:
         ffiPlugin: true
       macos:
         ffiPlugin: true

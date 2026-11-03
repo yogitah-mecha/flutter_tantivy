@@ -4,391 +4,397 @@
 // ignore_for_file: invalid_use_of_internal_member, unused_import, unnecessary_import
 
 import '../frb_generated.dart';
-
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-// These functions are ignored because they are not marked as `pub`: `collect_search_results`, `compute_fragment_range`, `preprocess_exists_query_syntax`, `register_custom_tokenizers`, `resolve_tokenizer_name`
-// These types are ignored because they are neither used by any `pub` functions nor (for structs and enums) marked `#[frb(unignore)]`: `TantivyApi`
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `assert_fields_are_eq`, `assert_fields_are_eq`, `assert_fields_are_eq`, `assert_fields_are_eq`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `eq`, `eq`, `eq`, `eq`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`
 
-/// Tantivy 인덱스를 초기화하는 함수
+            // These functions are ignored because they are not marked as `pub`: `album_facet`, `build_schema`, `collect_search_results`, `compute_fragment_range`, `preprocess_exists_query_syntax`, `read_document`, `read_documents`, `regex_escape`, `register_custom_tokenizers`, `resolve_tokenizer_name`, `sort_key`, `text_fields`, `to_tantivy_doc`
+// These types are ignored because they are neither used by any `pub` functions nor (for structs and enums) marked `#[frb(unignore)]`: `TantivyApi`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `assert_fields_are_eq`, `assert_fields_are_eq`, `assert_fields_are_eq`, `assert_fields_are_eq`, `assert_fields_are_eq`, `assert_fields_are_eq`, `assert_fields_are_eq`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `clone`, `eq`, `eq`, `eq`, `eq`, `eq`, `eq`, `eq`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`
+
+
+            /// Tantivy 인덱스를 초기화하는 함수
 /// `tokenizer_type`: `"default"`, `"cjk"`/`"ngram"`, `"whitespace"`, `"raw"`, `"en_stem"`/`"stemmer"` 또는 `"stem:<language>"` 선택 가능
-void initTantivy({required String dirPath, String? tokenizerType}) =>
-    RustLib.instance.api.crateApiTantivyApiInitTantivy(
-      dirPath: dirPath,
-      tokenizerType: tokenizerType,
-    );
+void  initTantivy({required String dirPath , String? tokenizerType }) => RustLib.instance.api.crateApiTantivyApiInitTantivy(dirPath: dirPath, tokenizerType: tokenizerType);
 
 /// Tantivy 상태를 해제하고 인덱스 및 리소스를 닫는 함수
-void closeTantivy() => RustLib.instance.api.crateApiTantivyApiCloseTantivy();
+void  closeTantivy() => RustLib.instance.api.crateApiTantivyApiCloseTantivy();
 
 /// [CREATE/UPDATE] 단일 문서를 추가하는 함수 (즉시 commit)
-Future<void> addDocument({required Document doc}) =>
-    RustLib.instance.api.crateApiTantivyApiAddDocument(doc: doc);
+Future<void>  addDocument({required Document doc }) => RustLib.instance.api.crateApiTantivyApiAddDocument(doc: doc);
 
 /// [READ] 쿼리로 문서를 검색하는 함수 (페이지네이션, 하이라이팅 스니펫, `field:*` Exists 문법 및 총 결과 수 지원)
-Future<SearchResponse> searchDocuments({
-  required String query,
-  required BigInt topK,
-  BigInt? offset,
-  bool? enableSnippet,
-}) => RustLib.instance.api.crateApiTantivyApiSearchDocuments(
-  query: query,
-  topK: topK,
-  offset: offset,
-  enableSnippet: enableSnippet,
-);
+Future<SearchResponse>  searchDocuments({required String query , required BigInt topK , BigInt? offset , bool? enableSnippet }) => RustLib.instance.api.crateApiTantivyApiSearchDocuments(query: query, topK: topK, offset: offset, enableSnippet: enableSnippet);
 
 /// [READ] 관대한(Lenient) 쿼리 파서로 문서를 검색하는 함수 (문법 오류가 있는 사용자 입력도 안전하게 처리하며 필드 부스트 및 기본 AND 모드 지원)
-Future<LenientSearchResponse> searchDocumentsLenient({
-  required String query,
-  required BigInt topK,
-  BigInt? offset,
-  bool? enableSnippet,
-  bool? conjunctionByDefault,
-  double? titleBoost,
-}) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsLenient(
-  query: query,
-  topK: topK,
-  offset: offset,
-  enableSnippet: enableSnippet,
-  conjunctionByDefault: conjunctionByDefault,
-  titleBoost: titleBoost,
-);
+Future<LenientSearchResponse>  searchDocumentsLenient({required String query , required BigInt topK , BigInt? offset , bool? enableSnippet , bool? conjunctionByDefault , double? titleBoost }) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsLenient(query: query, topK: topK, offset: offset, enableSnippet: enableSnippet, conjunctionByDefault: conjunctionByDefault, titleBoost: titleBoost);
 
 /// [READ] 정규표현식(Regex) 패턴으로 문서를 검색하는 함수
-Future<SearchResponse> searchDocumentsRegex({
-  required String pattern,
-  required BigInt topK,
-  BigInt? offset,
-  bool? enableSnippet,
-}) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsRegex(
-  pattern: pattern,
-  topK: topK,
-  offset: offset,
-  enableSnippet: enableSnippet,
-);
+Future<SearchResponse>  searchDocumentsRegex({required String pattern , required BigInt topK , BigInt? offset , bool? enableSnippet }) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsRegex(pattern: pattern, topK: topK, offset: offset, enableSnippet: enableSnippet);
 
 /// [READ] 정규표현식 구문(Regex Phrase) 패턴 시퀀스와 슬롭(slop)으로 문서를 검색하는 함수 (Tantivy #3135, #3137, #3138 포팅)
-Future<SearchResponse> searchDocumentsRegexPhrase({
-  required List<String> patterns,
-  int? slop,
-  int? maxExpansions,
-  required BigInt topK,
-  BigInt? offset,
-  bool? enableSnippet,
-}) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsRegexPhrase(
-  patterns: patterns,
-  slop: slop,
-  maxExpansions: maxExpansions,
-  topK: topK,
-  offset: offset,
-  enableSnippet: enableSnippet,
-);
+Future<SearchResponse>  searchDocumentsRegexPhrase({required List<String> patterns , int? slop , int? maxExpansions , required BigInt topK , BigInt? offset , bool? enableSnippet }) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsRegexPhrase(patterns: patterns, slop: slop, maxExpansions: maxExpansions, topK: topK, offset: offset, enableSnippet: enableSnippet);
 
 /// [READ] 오타 허용(Fuzzy / Levenshtein Automaton 기반)으로 문서를 검색하는 함수 (Tantivy #3136 포팅)
-Future<SearchResponse> searchDocumentsFuzzy({
-  required String term,
-  int? distance,
-  bool? transpositionCostOne,
-  bool? prefix,
-  required BigInt topK,
-  BigInt? offset,
-  bool? enableSnippet,
-}) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsFuzzy(
-  term: term,
-  distance: distance,
-  transpositionCostOne: transpositionCostOne,
-  prefix: prefix,
-  topK: topK,
-  offset: offset,
-  enableSnippet: enableSnippet,
-);
+Future<SearchResponse>  searchDocumentsFuzzy({required String term , int? distance , bool? transpositionCostOne , bool? prefix , required BigInt topK , BigInt? offset , bool? enableSnippet }) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsFuzzy(term: term, distance: distance, transpositionCostOne: transpositionCostOne, prefix: prefix, topK: topK, offset: offset, enableSnippet: enableSnippet);
 
-/// [READ] 특정 문서 ID와 유사한 문서를 검색하는 함수 (`MoreLikeThisQuery` 포팅)
-Future<SearchResponse> searchSimilarDocuments({
-  required String id,
-  required BigInt topK,
-  BigInt? minDocFrequency,
-  BigInt? maxDocFrequency,
-  BigInt? minTermFrequency,
-  BigInt? minWordLength,
-  BigInt? maxWordLength,
-  double? boostFactor,
-}) => RustLib.instance.api.crateApiTantivyApiSearchSimilarDocuments(
-  id: id,
-  topK: topK,
-  minDocFrequency: minDocFrequency,
-  maxDocFrequency: maxDocFrequency,
-  minTermFrequency: minTermFrequency,
-  minWordLength: minWordLength,
-  maxWordLength: maxWordLength,
-  boostFactor: boostFactor,
-);
+/// [READ] Tracks similar to the track at `path` (`MoreLikeThisQuery`).
+Future<SearchResponse>  searchSimilarDocuments({required String path , required BigInt topK , BigInt? minDocFrequency , BigInt? maxDocFrequency , BigInt? minTermFrequency , BigInt? minWordLength , BigInt? maxWordLength , double? boostFactor }) => RustLib.instance.api.crateApiTantivyApiSearchSimilarDocuments(path: path, topK: topK, minDocFrequency: minDocFrequency, maxDocFrequency: maxDocFrequency, minTermFrequency: minTermFrequency, minWordLength: minWordLength, maxWordLength: maxWordLength, boostFactor: boostFactor);
 
 /// [READ] 특정 필드에 값이 존재하는 문서를 검색하는 함수 (`ExistsQuery` / Tantivy #2974, #3068 포팅)
-Future<SearchResponse> searchDocumentsExists({
-  required String fieldName,
-  required BigInt topK,
-  BigInt? offset,
-}) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsExists(
-  fieldName: fieldName,
-  topK: topK,
-  offset: offset,
-);
+Future<SearchResponse>  searchDocumentsExists({required String fieldName , required BigInt topK , BigInt? offset }) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsExists(fieldName: fieldName, topK: topK, offset: offset);
 
 /// [READ] 접두사(prefix)로 인덱스 용어 사전(Term Dictionary)을 스트리밍 조회하여 추천 검색어 및 문서 빈도를 반환하는 함수 (Tantivy #3155 포팅)
-Future<List<TermSuggestion>> suggestTerms({
-  required String prefix,
-  BigInt? limit,
-  bool? includeTitle,
-}) => RustLib.instance.api.crateApiTantivyApiSuggestTerms(
-  prefix: prefix,
-  limit: limit,
-  includeTitle: includeTitle,
-);
+Future<List<TermSuggestion>>  suggestTerms({required String prefix , BigInt? limit , bool? includeTitle }) => RustLib.instance.api.crateApiTantivyApiSuggestTerms(prefix: prefix, limit: limit, includeTitle: includeTitle);
 
-/// [READ] ID로 특정 문서를 가져오는 함수
-Document? getDocumentById({required String id}) =>
-    RustLib.instance.api.crateApiTantivyApiGetDocumentById(id: id);
+/// [READ] The track at `path`, if indexed.
+Document?  getDocumentByPath({required String path }) => RustLib.instance.api.crateApiTantivyApiGetDocumentByPath(path: path);
 
 /// [READ] 인덱스에 등록된 전체 문서 수를 가져오는 함수
-BigInt getNumDocs() => RustLib.instance.api.crateApiTantivyApiGetNumDocs();
+BigInt  getNumDocs() => RustLib.instance.api.crateApiTantivyApiGetNumDocs();
 
 /// [READ] 인덱스의 디스크/컴포넌트별 공간 사용량 통계를 가져오는 함수 (`Searcher::space_usage` 포팅)
-IndexSpaceUsage getIndexSpaceUsage() =>
-    RustLib.instance.api.crateApiTantivyApiGetIndexSpaceUsage();
+IndexSpaceUsage  getIndexSpaceUsage() => RustLib.instance.api.crateApiTantivyApiGetIndexSpaceUsage();
 
 /// [READ] 현재 인덱스 메타데이터에 포함된 세그먼트 파일 상대 경로 목록을 가져오는 함수 (Tantivy #3080 `IndexMeta::list_segment_files` 포팅)
-List<String> listIndexSegmentFiles() =>
-    RustLib.instance.api.crateApiTantivyApiListIndexSegmentFiles();
+List<String>  listIndexSegmentFiles() => RustLib.instance.api.crateApiTantivyApiListIndexSegmentFiles();
 
 /// [UPDATE] 문서를 업데이트하는 함수
-Future<void> updateDocument({required Document doc}) =>
-    RustLib.instance.api.crateApiTantivyApiUpdateDocument(doc: doc);
+Future<void>  updateDocument({required Document doc }) => RustLib.instance.api.crateApiTantivyApiUpdateDocument(doc: doc);
 
-/// [DELETE] 문서를 삭제하는 함수
-Future<void> deleteDocument({required String id}) =>
-    RustLib.instance.api.crateApiTantivyApiDeleteDocument(id: id);
+/// [DELETE] Removes the track at `path` (commits).
+Future<void>  deleteDocument({required String path }) => RustLib.instance.api.crateApiTantivyApiDeleteDocument(path: path);
 
 /// [DELETE] 모든 문서를 일괄 삭제하는 함수
-Future<void> deleteAllDocuments() =>
-    RustLib.instance.api.crateApiTantivyApiDeleteAllDocuments();
+Future<void>  deleteAllDocuments() => RustLib.instance.api.crateApiTantivyApiDeleteAllDocuments();
 
 /// [BATCH] 여러 문서를 한 번에 추가하는 함수
-Future<void> addDocumentsBatch({required List<Document> docs}) =>
-    RustLib.instance.api.crateApiTantivyApiAddDocumentsBatch(docs: docs);
+Future<void>  addDocumentsBatch({required List<Document> docs }) => RustLib.instance.api.crateApiTantivyApiAddDocumentsBatch(docs: docs);
 
-/// [BATCH] 여러 문서를 한 번에 삭제하는 함수
-Future<void> deleteDocumentsBatch({required List<String> ids}) =>
-    RustLib.instance.api.crateApiTantivyApiDeleteDocumentsBatch(ids: ids);
+/// [BATCH] Removes the tracks at `paths` (one commit).
+Future<void>  deleteDocumentsBatch({required List<String> paths }) => RustLib.instance.api.crateApiTantivyApiDeleteDocumentsBatch(paths: paths);
 
 /// [UTILITY] 명시적으로 commit을 수행하는 함수
-void commit() => RustLib.instance.api.crateApiTantivyApiCommit();
+void  commit() => RustLib.instance.api.crateApiTantivyApiCommit();
 
 /// [CREATE] commit 없이 문서를 추가하는 함수
-Future<void> addDocumentNoCommit({required Document doc}) =>
-    RustLib.instance.api.crateApiTantivyApiAddDocumentNoCommit(doc: doc);
+Future<void>  addDocumentNoCommit({required Document doc }) => RustLib.instance.api.crateApiTantivyApiAddDocumentNoCommit(doc: doc);
 
-/// [DELETE] commit 없이 문서를 삭제하는 함수
-Future<void> deleteDocumentNoCommit({required String id}) =>
-    RustLib.instance.api.crateApiTantivyApiDeleteDocumentNoCommit(id: id);
+/// [DELETE] Removes the track at `path` without committing.
+Future<void>  deleteDocumentNoCommit({required String path }) => RustLib.instance.api.crateApiTantivyApiDeleteDocumentNoCommit(path: path);
 
-/// Flutter에서 사용할 문서 구조체
-class Document {
-  final String id;
-  final String? title;
-  final String text;
+/// [READ] A page of tracks ordered by `title_sort` or `artist_sort` (A→Z).
+Future<List<Document>>  listDocuments({required BigInt offset , required BigInt limit , required SortOrder sort }) => RustLib.instance.api.crateApiTantivyApiListDocuments(offset: offset, limit: limit, sort: sort);
 
-  const Document({required this.id, this.title, required this.text});
+/// [READ] The tracks at `paths`, in the same order. Unknown paths are skipped.
+Future<List<Document>>  getDocumentsByPaths({required List<String> paths }) => RustLib.instance.api.crateApiTantivyApiGetDocumentsByPaths(paths: paths);
 
-  @override
-  int get hashCode => id.hashCode ^ title.hashCode ^ text.hashCode;
+/// [READ] `path`, `mtime`, `size` and `last_scanned_at` of every track, read
+/// from fast fields only (no stored documents are loaded).
+Future<List<ScanState>>  getScanStates() => RustLib.instance.api.crateApiTantivyApiGetScanStates();
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Document &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          title == other.title &&
-          text == other.text;
-}
+/// [READ] Every album of the `album_key` facet with its track count, ordered
+/// by artist then album (case-insensitive).
+Future<List<AlbumInfo>>  listAlbums() => RustLib.instance.api.crateApiTantivyApiListAlbums();
+
+/// [READ] The tracks of an album (`album_key` = `/artist/album`), by title.
+Future<List<Document>>  listAlbumDocuments({required String artist , required String album }) => RustLib.instance.api.crateApiTantivyApiListAlbumDocuments(artist: artist, album: album);
+
+/// [READ] Search as you type over title, artist and album: every word of
+/// `query` must match the start of a word in one of them (title matches
+/// rank higher). When nothing matches, each word may have one typo instead.
+Future<SearchResponse>  searchDocumentsPrefix({required String query , required BigInt topK }) => RustLib.instance.api.crateApiTantivyApiSearchDocumentsPrefix(query: query, topK: topK);
+
+            /// An album of the `album_key` facet (`/artist/album`) and its track count.
+class AlbumInfo  {
+                final String artist;
+final String album;
+final BigInt trackCount;
+
+                const AlbumInfo({required this.artist ,required this.album ,required this.trackCount ,});
+
+
+
+
+
+        @override
+        int get hashCode => artist.hashCode^album.hashCode^trackCount.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is AlbumInfo &&
+                runtimeType == other.runtimeType
+                && artist == other.artist&& album == other.album&& trackCount == other.trackCount;
+
+            }
+
+/// A music track: one document of the index.
+///
+/// Schema:
+///
+/// | field             | options                  | use                                 |
+/// |-------------------|--------------------------|-------------------------------------|
+/// | `path`            | `STRING | STORED | FAST` | primary key (exact match, delete)   |
+/// | `uid`             | `STRING | STORED`        | stable id of the track              |
+/// | `title`           | `TEXT | STORED`          | tokenized, for search               |
+/// | `artist`          | `TEXT | STORED`          | tokenized, for search               |
+/// | `album`           | `TEXT | STORED`          | tokenized, for search               |
+/// | `title_sort`      | `STRING | FAST`          | lowercased title, for ordering      |
+/// | `artist_sort`     | `STRING | FAST`          | lowercased artist, for ordering     |
+/// | `album_key`       | `FACET`                  | `/artist/album`, for browsing       |
+/// | `duration_ms`     | `U64 | STORED | FAST`    | track length                        |
+/// | `mtime`           | `U64 | FAST`             | change detection (file mtime, ms)   |
+/// | `size`            | `U64 | FAST`             | change detection (file size, bytes) |
+/// | `artwork_base64`  | `STORED`                 | cover art, base64 (not indexed)     |
+/// | `last_scanned_at` | `U64 | FAST`             | last scan time (ms since epoch)     |
+///
+/// `title_sort`, `artist_sort` and `album_key` are derived from the other
+/// fields when the document is written.
+class Document  {
+                /// Absolute file path. Primary key of the index.
+final String path;
+/// Stable id of the track.
+final String uid;
+final String title;
+final String artist;
+final String? album;
+final BigInt? durationMs;
+/// File modification time (milliseconds since the Unix epoch).
+final BigInt mtime;
+/// File size in bytes.
+final BigInt size;
+/// Cover art as base64-encoded image bytes. Stored only (not indexed):
+/// image data can exceed Tantivy's maximum term length.
+final String? artworkBase64;
+/// When the file was last scanned (milliseconds since the Unix epoch).
+final BigInt lastScannedAt;
+
+                const Document({required this.path ,required this.uid ,required this.title ,required this.artist ,this.album ,this.durationMs ,required this.mtime ,required this.size ,this.artworkBase64 ,required this.lastScannedAt ,});
+
+
+
+
+
+        @override
+        int get hashCode => path.hashCode^uid.hashCode^title.hashCode^artist.hashCode^album.hashCode^durationMs.hashCode^mtime.hashCode^size.hashCode^artworkBase64.hashCode^lastScannedAt.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is Document &&
+                runtimeType == other.runtimeType
+                && path == other.path&& uid == other.uid&& title == other.title&& artist == other.artist&& album == other.album&& durationMs == other.durationMs&& mtime == other.mtime&& size == other.size&& artworkBase64 == other.artworkBase64&& lastScannedAt == other.lastScannedAt;
+
+            }
 
 /// 인덱스 디스크/메모리 공간 사용량 통계 구조체 (`Searcher::space_usage` 포팅)
-class IndexSpaceUsage {
-  final BigInt totalBytes;
-  final BigInt numDocs;
-  final BigInt numSegments;
-  final BigInt storeBytes;
-  final BigInt postingsBytes;
-  final BigInt positionsBytes;
-  final BigInt fastFieldsBytes;
-  final BigInt termdictBytes;
-  final BigInt fieldnormsBytes;
-  final BigInt deletesBytes;
+class IndexSpaceUsage  {
+                final BigInt totalBytes;
+final BigInt numDocs;
+final BigInt numSegments;
+final BigInt storeBytes;
+final BigInt postingsBytes;
+final BigInt positionsBytes;
+final BigInt fastFieldsBytes;
+final BigInt termdictBytes;
+final BigInt fieldnormsBytes;
+final BigInt deletesBytes;
 
-  const IndexSpaceUsage({
-    required this.totalBytes,
-    required this.numDocs,
-    required this.numSegments,
-    required this.storeBytes,
-    required this.postingsBytes,
-    required this.positionsBytes,
-    required this.fastFieldsBytes,
-    required this.termdictBytes,
-    required this.fieldnormsBytes,
-    required this.deletesBytes,
-  });
+                const IndexSpaceUsage({required this.totalBytes ,required this.numDocs ,required this.numSegments ,required this.storeBytes ,required this.postingsBytes ,required this.positionsBytes ,required this.fastFieldsBytes ,required this.termdictBytes ,required this.fieldnormsBytes ,required this.deletesBytes ,});
 
-  @override
-  int get hashCode =>
-      totalBytes.hashCode ^
-      numDocs.hashCode ^
-      numSegments.hashCode ^
-      storeBytes.hashCode ^
-      postingsBytes.hashCode ^
-      positionsBytes.hashCode ^
-      fastFieldsBytes.hashCode ^
-      termdictBytes.hashCode ^
-      fieldnormsBytes.hashCode ^
-      deletesBytes.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is IndexSpaceUsage &&
-          runtimeType == other.runtimeType &&
-          totalBytes == other.totalBytes &&
-          numDocs == other.numDocs &&
-          numSegments == other.numSegments &&
-          storeBytes == other.storeBytes &&
-          postingsBytes == other.postingsBytes &&
-          positionsBytes == other.positionsBytes &&
-          fastFieldsBytes == other.fastFieldsBytes &&
-          termdictBytes == other.termdictBytes &&
-          fieldnormsBytes == other.fieldnormsBytes &&
-          deletesBytes == other.deletesBytes;
-}
+
+
+
+        @override
+        int get hashCode => totalBytes.hashCode^numDocs.hashCode^numSegments.hashCode^storeBytes.hashCode^postingsBytes.hashCode^positionsBytes.hashCode^fastFieldsBytes.hashCode^termdictBytes.hashCode^fieldnormsBytes.hashCode^deletesBytes.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is IndexSpaceUsage &&
+                runtimeType == other.runtimeType
+                && totalBytes == other.totalBytes&& numDocs == other.numDocs&& numSegments == other.numSegments&& storeBytes == other.storeBytes&& postingsBytes == other.postingsBytes&& positionsBytes == other.positionsBytes&& fastFieldsBytes == other.fastFieldsBytes&& termdictBytes == other.termdictBytes&& fieldnormsBytes == other.fieldnormsBytes&& deletesBytes == other.deletesBytes;
+
+            }
 
 /// 관대한(Lenient) 쿼리 파싱 검색 응답 구조체 (검색 결과 + 파싱 경고/오류 목록)
-class LenientSearchResponse {
-  final BigInt totalHits;
-  final List<SearchResult> results;
-  final List<String> errors;
+class LenientSearchResponse  {
+                final BigInt totalHits;
+final List<SearchResult> results;
+final List<String> errors;
 
-  const LenientSearchResponse({
-    required this.totalHits,
-    required this.results,
-    required this.errors,
-  });
+                const LenientSearchResponse({required this.totalHits ,required this.results ,required this.errors ,});
 
-  @override
-  int get hashCode => totalHits.hashCode ^ results.hashCode ^ errors.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LenientSearchResponse &&
-          runtimeType == other.runtimeType &&
-          totalHits == other.totalHits &&
-          results == other.results &&
-          errors == other.errors;
-}
+
+
+
+        @override
+        int get hashCode => totalHits.hashCode^results.hashCode^errors.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is LenientSearchResponse &&
+                runtimeType == other.runtimeType
+                && totalHits == other.totalHits&& results == other.results&& errors == other.errors;
+
+            }
+
+/// `path`, `mtime`, `size` and `last_scanned_at` of an indexed track, read
+/// from fast fields only, for comparing the index with the files on disk.
+class ScanState  {
+                final String path;
+final BigInt mtime;
+final BigInt size;
+final BigInt lastScannedAt;
+
+                const ScanState({required this.path ,required this.mtime ,required this.size ,required this.lastScannedAt ,});
+
+
+
+
+
+        @override
+        int get hashCode => path.hashCode^mtime.hashCode^size.hashCode^lastScannedAt.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is ScanState &&
+                runtimeType == other.runtimeType
+                && path == other.path&& mtime == other.mtime&& size == other.size&& lastScannedAt == other.lastScannedAt;
+
+            }
 
 /// Flutter에서 사용할 검색 응답 구조체 (검색 결과 목록 + 총 매칭 문서 수)
-class SearchResponse {
-  final BigInt totalHits;
-  final List<SearchResult> results;
+class SearchResponse  {
+                final BigInt totalHits;
+final List<SearchResult> results;
 
-  const SearchResponse({required this.totalHits, required this.results});
+                const SearchResponse({required this.totalHits ,required this.results ,});
 
-  @override
-  int get hashCode => totalHits.hashCode ^ results.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SearchResponse &&
-          runtimeType == other.runtimeType &&
-          totalHits == other.totalHits &&
-          results == other.results;
-}
+
+
+
+        @override
+        int get hashCode => totalHits.hashCode^results.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is SearchResponse &&
+                runtimeType == other.runtimeType
+                && totalHits == other.totalHits&& results == other.results;
+
+            }
 
 /// Flutter에서 사용할 검색 결과 구조체
-class SearchResult {
-  final double score;
-  final Document doc;
-  final String? snippet;
-  final String? titleSnippet;
-  final TextRange? fragmentRange;
-  final List<TextRange>? highlightedRanges;
+class SearchResult  {
+                final double score;
+final Document doc;
+/// HTML snippet of `title` with the matches highlighted.
+final String? snippet;
+/// HTML snippet of `artist` with the matches highlighted.
+final String? artistSnippet;
+/// HTML snippet of `album` with the matches highlighted.
+final String? albumSnippet;
+/// Byte range of [SearchResult::snippet]'s fragment inside `title`.
+final TextRange? fragmentRange;
+/// Byte ranges of the matches inside the `title` fragment.
+final List<TextRange>? highlightedRanges;
 
-  const SearchResult({
-    required this.score,
-    required this.doc,
-    this.snippet,
-    this.titleSnippet,
-    this.fragmentRange,
-    this.highlightedRanges,
-  });
+                const SearchResult({required this.score ,required this.doc ,this.snippet ,this.artistSnippet ,this.albumSnippet ,this.fragmentRange ,this.highlightedRanges ,});
 
-  @override
-  int get hashCode =>
-      score.hashCode ^
-      doc.hashCode ^
-      snippet.hashCode ^
-      titleSnippet.hashCode ^
-      fragmentRange.hashCode ^
-      highlightedRanges.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SearchResult &&
-          runtimeType == other.runtimeType &&
-          score == other.score &&
-          doc == other.doc &&
-          snippet == other.snippet &&
-          titleSnippet == other.titleSnippet &&
-          fragmentRange == other.fragmentRange &&
-          highlightedRanges == other.highlightedRanges;
-}
+
+
+
+        @override
+        int get hashCode => score.hashCode^doc.hashCode^snippet.hashCode^artistSnippet.hashCode^albumSnippet.hashCode^fragmentRange.hashCode^highlightedRanges.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is SearchResult &&
+                runtimeType == other.runtimeType
+                && score == other.score&& doc == other.doc&& snippet == other.snippet&& artistSnippet == other.artistSnippet&& albumSnippet == other.albumSnippet&& fragmentRange == other.fragmentRange&& highlightedRanges == other.highlightedRanges;
+
+            }
+
+/// Order of [list_documents].
+enum SortOrder {
+                    /// By `title_sort`, A→Z.
+title,
+/// By `artist_sort`, A→Z.
+artist,
+                    ;
+                    
+                }
 
 /// 인덱스 용어 사전(Term Dictionary) 자동완성/추천 항목 구조체
-class TermSuggestion {
-  final String term;
-  final int docFreq;
+class TermSuggestion  {
+                final String term;
+final int docFreq;
 
-  const TermSuggestion({required this.term, required this.docFreq});
+                const TermSuggestion({required this.term ,required this.docFreq ,});
 
-  @override
-  int get hashCode => term.hashCode ^ docFreq.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TermSuggestion &&
-          runtimeType == other.runtimeType &&
-          term == other.term &&
-          docFreq == other.docFreq;
-}
+
+
+
+        @override
+        int get hashCode => term.hashCode^docFreq.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is TermSuggestion &&
+                runtimeType == other.runtimeType
+                && term == other.term&& docFreq == other.docFreq;
+
+            }
 
 /// 텍스트 내 바이트 오프셋 범위 구조체 (하이라이트 구간 및 스니펫 프래그먼트 범위)
-class TextRange {
-  final BigInt start;
-  final BigInt end;
+class TextRange  {
+                final BigInt start;
+final BigInt end;
 
-  const TextRange({required this.start, required this.end});
+                const TextRange({required this.start ,required this.end ,});
 
-  @override
-  int get hashCode => start.hashCode ^ end.hashCode;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TextRange &&
-          runtimeType == other.runtimeType &&
-          start == other.start &&
-          end == other.end;
-}
+
+
+
+        @override
+        int get hashCode => start.hashCode^end.hashCode;
+
+
+
+        @override
+        bool operator ==(Object other) =>
+            identical(this, other) ||
+            other is TextRange &&
+                runtimeType == other.runtimeType
+                && start == other.start&& end == other.end;
+
+            }
+            

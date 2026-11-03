@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Changed (breaking)
+- **Music schema**: the index schema is now a music-track schema — `path` (`STRING | STORED | FAST`, primary key), `uid`, `title`/`artist`/`album` (`TEXT | STORED`), `title_sort`/`artist_sort` (`STRING | FAST`), `album_key` (facet `/artist/album`), `duration_ms` (`U64 | STORED | FAST`), `mtime`/`size`/`last_scanned_at` (`U64 | FAST`), `artwork_base64` (`STORED` only: cover art as base64, not indexed because image data can exceed Tantivy's maximum term length). `Document` carries these fields (`id`/`text` removed); `title_sort`, `artist_sort` and `album_key` are derived on write.
+- Keys are paths: `getDocumentById` → `getDocumentByPath`; `deleteDocument`, `deleteDocumentsBatch`, `deleteDocumentNoCommit` and `searchSimilarDocuments` take paths.
+- Search APIs search `title`, `artist` and `album`; `SearchResult.titleSnippet` is replaced by `artistSnippet`/`albumSnippet` (`snippet`, `fragmentRange`, `highlightedRanges` refer to `title`).
+- Indexes created with the old schema must be deleted (opening one reports which field is missing).
+
+### Added
+- `listDocuments` (paged, ordered by `title_sort` or `artist_sort`), `getDocumentsByPaths`, `getScanStates` (path/mtime/size/last_scanned_at from fast fields), `listAlbums` / `listAlbumDocuments` (`album_key` facet), `searchDocumentsPrefix` (search as you type with typo fallback).
+- flutter-elinux support (`elinux` platform, `elinux-x64` / `elinux-arm64` cargokit targets).
+
 ## [2026.10.17] - 2026-10-17
 
 ### Added
