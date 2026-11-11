@@ -5,2080 +5,1679 @@
 
 import 'api/simple.dart';
 import 'api/tantivy_api.dart';
-
 import 'dart:async';
 import 'dart:convert';
-
 import 'frb_generated.dart';
-import 'frb_generated.io.dart'
-    if (dart.library.js_interop) 'frb_generated.web.dart';
-
+import 'frb_generated.io.dart' if (dart.library.js_interop) 'frb_generated.web.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-/// Main entrypoint of the Rust API
-class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
-  @internal
-  static final instance = RustLib._();
 
-  RustLib._();
+                /// Main entrypoint of the Rust API
+                class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
+                  @internal
+                  static final instance = RustLib._();
 
-  /// Initialize flutter_rust_bridge
-  static Future<void> init({
-    RustLibApi? api,
-    BaseHandler? handler,
-    ExternalLibrary? externalLibrary,
-    bool forceSameCodegenVersion = true,
-  }) async {
-    await instance.initImpl(
-      api: api,
-      handler: handler,
-      externalLibrary: externalLibrary,
-      forceSameCodegenVersion: forceSameCodegenVersion,
-    );
-  }
+                  RustLib._();
 
-  /// Initialize flutter_rust_bridge in mock mode.
-  /// No libraries for FFI are loaded.
-  static void initMock({required RustLibApi api}) {
-    instance.initMockImpl(api: api);
-  }
+                  /// Initialize flutter_rust_bridge
+                  static Future<void> init({
+                    RustLibApi? api,
+                    BaseHandler? handler,
+                    ExternalLibrary? externalLibrary,
+                    bool forceSameCodegenVersion = true,
+                  }) async {
+                    await instance.initImpl(
+                      api: api,
+                      handler: handler,
+                      externalLibrary: externalLibrary,
+                      forceSameCodegenVersion: forceSameCodegenVersion,
+                    );
+                  }
 
-  /// Dispose flutter_rust_bridge
-  ///
-  /// The call to this function is optional, since flutter_rust_bridge (and everything else)
-  /// is automatically disposed when the app stops.
-  static void dispose() => instance.disposeImpl();
+                  /// Initialize flutter_rust_bridge in mock mode.
+                  /// No libraries for FFI are loaded.
+                  static void initMock({
+                    required RustLibApi api,
+                  }) {
+                    instance.initMockImpl(
+                      api: api,
+                    );
+                  }
 
-  @override
-  ApiImplConstructor<RustLibApiImpl, RustLibWire> get apiImplConstructor =>
-      RustLibApiImpl.new;
+                  /// Dispose flutter_rust_bridge
+                  ///
+                  /// The call to this function is optional, since flutter_rust_bridge (and everything else)
+                  /// is automatically disposed when the app stops.
+                  static void dispose() => instance.disposeImpl();
 
-  @override
-  WireConstructor<RustLibWire> get wireConstructor =>
-      RustLibWire.fromExternalLibrary;
+                  @override
+                  ApiImplConstructor<RustLibApiImpl, RustLibWire> get apiImplConstructor => RustLibApiImpl.new;
 
-  @override
-  Future<void> executeRustInitializers() async {
-    await api.crateApiSimpleInitApp();
-  }
+                  @override
+                  WireConstructor<RustLibWire> get wireConstructor => RustLibWire.fromExternalLibrary;
 
-  @override
-  ExternalLibraryLoaderConfig get defaultExternalLibraryLoaderConfig =>
-      kDefaultExternalLibraryLoaderConfig;
+                  @override
+                  Future<void> executeRustInitializers() async {
+                    await api.crateApiSimpleInitApp();
 
-  @override
-  String get codegenVersion => '2.13.0';
+                    
+                  }
 
-  @override
-  int get rustContentHash => -707720866;
+                  @override
+                  ExternalLibraryLoaderConfig get defaultExternalLibraryLoaderConfig => kDefaultExternalLibraryLoaderConfig;
 
-  static const kDefaultExternalLibraryLoaderConfig =
-      ExternalLibraryLoaderConfig(
-        stem: 'flutter_tantivy',
-        ioDirectory: 'rust/target/release/',
-        webPrefix: 'pkg/',
-        wasmBindgenName: 'wasm_bindgen',
-      );
-}
+                  @override
+                  String get codegenVersion => '2.13.0';
 
-abstract class RustLibApi extends BaseApi {
-  Future<void> crateApiTantivyApiAddDocument({required Document doc});
+                  @override
+                  int get rustContentHash => -667244317;
 
-  Future<void> crateApiTantivyApiAddDocumentNoCommit({required Document doc});
+                  static const kDefaultExternalLibraryLoaderConfig = ExternalLibraryLoaderConfig(
+                    stem: 'flutter_tantivy',
+                    ioDirectory: 'rust/target/release/',
+                    webPrefix: 'pkg/',
+                    wasmBindgenName: 'wasm_bindgen',
+                  );
+                }
+                
 
-  Future<void> crateApiTantivyApiAddDocumentsBatch({
-    required List<Document> docs,
-  });
+                abstract class RustLibApi extends BaseApi {
+                  Future<void> crateApiTantivyApiAddDocument({required Document doc });
 
-  void crateApiTantivyApiCloseTantivy();
+Future<void> crateApiTantivyApiAddDocumentNoCommit({required Document doc });
 
-  void crateApiTantivyApiCommit();
+Future<void> crateApiTantivyApiAddDocumentsBatch({required List<Document> docs });
 
-  Future<void> crateApiTantivyApiDeleteAllDocuments();
+void crateApiTantivyApiCloseTantivy();
 
-  Future<void> crateApiTantivyApiDeleteDocument({required String id});
+void crateApiTantivyApiCommit();
 
-  Future<void> crateApiTantivyApiDeleteDocumentNoCommit({required String id});
+Future<void> crateApiTantivyApiDeleteAllDocuments();
 
-  Future<void> crateApiTantivyApiDeleteDocumentsBatch({
-    required List<String> ids,
-  });
+Future<void> crateApiTantivyApiDeleteDocument({required String path });
 
-  Document? crateApiTantivyApiGetDocumentById({required String id});
+Future<void> crateApiTantivyApiDeleteDocumentNoCommit({required String path });
 
-  IndexSpaceUsage crateApiTantivyApiGetIndexSpaceUsage();
+Future<void> crateApiTantivyApiDeleteDocumentsBatch({required List<String> paths });
 
-  BigInt crateApiTantivyApiGetNumDocs();
+Document? crateApiTantivyApiGetDocumentByPath({required String path });
 
-  String crateApiSimpleGreet({required String name});
+Future<List<Document>> crateApiTantivyApiGetDocumentsByPaths({required List<String> paths });
 
-  Future<void> crateApiSimpleInitApp();
+IndexSpaceUsage crateApiTantivyApiGetIndexSpaceUsage();
 
-  void crateApiTantivyApiInitTantivy({
-    required String dirPath,
-    String? tokenizerType,
-  });
+BigInt crateApiTantivyApiGetNumDocs();
 
-  List<String> crateApiTantivyApiListIndexSegmentFiles();
+Future<List<ScanState>> crateApiTantivyApiGetScanStates();
 
-  Future<SearchResponse> crateApiTantivyApiSearchDocuments({
-    required String query,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  });
+String crateApiSimpleGreet({required String name });
 
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsExists({
-    required String fieldName,
-    required BigInt topK,
-    BigInt? offset,
-  });
+Future<void> crateApiSimpleInitApp();
 
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsFuzzy({
-    required String term,
-    int? distance,
-    bool? transpositionCostOne,
-    bool? prefix,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  });
+void crateApiTantivyApiInitTantivy({required String dirPath , String? tokenizerType });
 
-  Future<LenientSearchResponse> crateApiTantivyApiSearchDocumentsLenient({
-    required String query,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-    bool? conjunctionByDefault,
-    double? titleBoost,
-  });
+Future<List<Document>> crateApiTantivyApiListAlbumDocuments({required String artist , required String album });
 
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegex({
-    required String pattern,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  });
+Future<List<AlbumInfo>> crateApiTantivyApiListAlbums();
 
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegexPhrase({
-    required List<String> patterns,
-    int? slop,
-    int? maxExpansions,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  });
+Future<List<Document>> crateApiTantivyApiListDocuments({required BigInt offset , required BigInt limit , required SortOrder sort });
 
-  Future<SearchResponse> crateApiTantivyApiSearchSimilarDocuments({
-    required String id,
-    required BigInt topK,
-    BigInt? minDocFrequency,
-    BigInt? maxDocFrequency,
-    BigInt? minTermFrequency,
-    BigInt? minWordLength,
-    BigInt? maxWordLength,
-    double? boostFactor,
-  });
+List<String> crateApiTantivyApiListIndexSegmentFiles();
 
-  Future<List<TermSuggestion>> crateApiTantivyApiSuggestTerms({
-    required String prefix,
-    BigInt? limit,
-    bool? includeTitle,
-  });
+Future<SearchResponse> crateApiTantivyApiSearchDocuments({required String query , required BigInt topK , BigInt? offset , bool? enableSnippet });
 
-  Future<void> crateApiTantivyApiUpdateDocument({required Document doc});
-}
+Future<SearchResponse> crateApiTantivyApiSearchDocumentsExists({required String fieldName , required BigInt topK , BigInt? offset });
 
-class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
-  RustLibApiImpl({
-    required super.handler,
-    required super.wire,
-    required super.generalizedFrbRustBinding,
-    required super.portManager,
-  });
+Future<SearchResponse> crateApiTantivyApiSearchDocumentsFuzzy({required String term , int? distance , bool? transpositionCostOne , bool? prefix , required BigInt topK , BigInt? offset , bool? enableSnippet });
 
-  @override
-  Future<void> crateApiTantivyApiAddDocument({required Document doc}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_box_autoadd_document(doc, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 1,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+Future<LenientSearchResponse> crateApiTantivyApiSearchDocumentsLenient({required String query , required BigInt topK , BigInt? offset , bool? enableSnippet , bool? conjunctionByDefault , double? titleBoost });
+
+Future<SearchResponse> crateApiTantivyApiSearchDocumentsPrefix({required String query , required BigInt topK });
+
+Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegex({required String pattern , required BigInt topK , BigInt? offset , bool? enableSnippet });
+
+Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegexPhrase({required List<String> patterns , int? slop , int? maxExpansions , required BigInt topK , BigInt? offset , bool? enableSnippet });
+
+Future<SearchResponse> crateApiTantivyApiSearchSimilarDocuments({required String path , required BigInt topK , BigInt? minDocFrequency , BigInt? maxDocFrequency , BigInt? minTermFrequency , BigInt? minWordLength , BigInt? maxWordLength , double? boostFactor });
+
+Future<List<TermSuggestion>> crateApiTantivyApiSuggestTerms({required String prefix , BigInt? limit , bool? includeTitle });
+
+Future<void> crateApiTantivyApiUpdateDocument({required Document doc });
+
+
+                }
+                
+
+                class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
+                  RustLibApiImpl({
+                    required super.handler,
+                    required super.wire,
+                    required super.generalizedFrbRustBinding,
+                    required super.portManager,
+                  });
+
+                  @override Future<void> crateApiTantivyApiAddDocument({required Document doc })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_box_autoadd_document(doc, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiAddDocumentConstMeta,
-        argValues: [doc],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiAddDocumentConstMeta,
+            argValues: [doc],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiAddDocumentConstMeta =>
-      const TaskConstMeta(debugName: "add_document", argNames: ["doc"]);
 
-  @override
-  Future<void> crateApiTantivyApiAddDocumentNoCommit({required Document doc}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_box_autoadd_document(doc, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 2,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiAddDocumentConstMeta => const TaskConstMeta(
+            debugName: "add_document",
+            argNames: ["doc"],
+        );
+        
+
+@override Future<void> crateApiTantivyApiAddDocumentNoCommit({required Document doc })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_box_autoadd_document(doc, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiAddDocumentNoCommitConstMeta,
-        argValues: [doc],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiAddDocumentNoCommitConstMeta,
+            argValues: [doc],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiAddDocumentNoCommitConstMeta =>
-      const TaskConstMeta(
-        debugName: "add_document_no_commit",
-        argNames: ["doc"],
-      );
 
-  @override
-  Future<void> crateApiTantivyApiAddDocumentsBatch({
-    required List<Document> docs,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_list_document(docs, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 3,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiAddDocumentNoCommitConstMeta => const TaskConstMeta(
+            debugName: "add_document_no_commit",
+            argNames: ["doc"],
+        );
+        
+
+@override Future<void> crateApiTantivyApiAddDocumentsBatch({required List<Document> docs })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_list_document(docs, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiAddDocumentsBatchConstMeta,
-        argValues: [docs],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiAddDocumentsBatchConstMeta,
+            argValues: [docs],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiAddDocumentsBatchConstMeta =>
-      const TaskConstMeta(debugName: "add_documents_batch", argNames: ["docs"]);
 
-  @override
-  void crateApiTantivyApiCloseTantivy() {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiAddDocumentsBatchConstMeta => const TaskConstMeta(
+            debugName: "add_documents_batch",
+            argNames: ["docs"],
+        );
+        
+
+@override void crateApiTantivyApiCloseTantivy()  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiCloseTantivyConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiCloseTantivyConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiCloseTantivyConstMeta =>
-      const TaskConstMeta(debugName: "close_tantivy", argNames: []);
 
-  @override
-  void crateApiTantivyApiCommit() {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiCloseTantivyConstMeta => const TaskConstMeta(
+            debugName: "close_tantivy",
+            argNames: [],
+        );
+        
+
+@override void crateApiTantivyApiCommit()  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiCommitConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiCommitConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiCommitConstMeta =>
-      const TaskConstMeta(debugName: "commit", argNames: []);
 
-  @override
-  Future<void> crateApiTantivyApiDeleteAllDocuments() {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 6,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiCommitConstMeta => const TaskConstMeta(
+            debugName: "commit",
+            argNames: [],
+        );
+        
+
+@override Future<void> crateApiTantivyApiDeleteAllDocuments()  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 6, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiDeleteAllDocumentsConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiDeleteAllDocumentsConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiDeleteAllDocumentsConstMeta =>
-      const TaskConstMeta(debugName: "delete_all_documents", argNames: []);
 
-  @override
-  Future<void> crateApiTantivyApiDeleteDocument({required String id}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(id, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 7,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiDeleteAllDocumentsConstMeta => const TaskConstMeta(
+            debugName: "delete_all_documents",
+            argNames: [],
+        );
+        
+
+@override Future<void> crateApiTantivyApiDeleteDocument({required String path })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(path, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 7, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiDeleteDocumentConstMeta,
-        argValues: [id],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiDeleteDocumentConstMeta,
+            argValues: [path],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiDeleteDocumentConstMeta =>
-      const TaskConstMeta(debugName: "delete_document", argNames: ["id"]);
 
-  @override
-  Future<void> crateApiTantivyApiDeleteDocumentNoCommit({required String id}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(id, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 8,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiDeleteDocumentConstMeta => const TaskConstMeta(
+            debugName: "delete_document",
+            argNames: ["path"],
+        );
+        
+
+@override Future<void> crateApiTantivyApiDeleteDocumentNoCommit({required String path })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(path, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 8, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiDeleteDocumentNoCommitConstMeta,
-        argValues: [id],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiDeleteDocumentNoCommitConstMeta,
+            argValues: [path],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiDeleteDocumentNoCommitConstMeta =>
-      const TaskConstMeta(
-        debugName: "delete_document_no_commit",
-        argNames: ["id"],
-      );
 
-  @override
-  Future<void> crateApiTantivyApiDeleteDocumentsBatch({
-    required List<String> ids,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_list_String(ids, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 9,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiDeleteDocumentNoCommitConstMeta => const TaskConstMeta(
+            debugName: "delete_document_no_commit",
+            argNames: ["path"],
+        );
+        
+
+@override Future<void> crateApiTantivyApiDeleteDocumentsBatch({required List<String> paths })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_list_String(paths, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 9, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiDeleteDocumentsBatchConstMeta,
-        argValues: [ids],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiDeleteDocumentsBatchConstMeta,
+            argValues: [paths],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiDeleteDocumentsBatchConstMeta =>
-      const TaskConstMeta(
-        debugName: "delete_documents_batch",
-        argNames: ["ids"],
-      );
 
-  @override
-  Document? crateApiTantivyApiGetDocumentById({required String id}) {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(id, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 10)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiDeleteDocumentsBatchConstMeta => const TaskConstMeta(
+            debugName: "delete_documents_batch",
+            argNames: ["paths"],
+        );
+        
+
+@override Document? crateApiTantivyApiGetDocumentByPath({required String path })  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(path, serializer);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 10)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_opt_box_autoadd_document,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiGetDocumentByIdConstMeta,
-        argValues: [id],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiGetDocumentByPathConstMeta,
+            argValues: [path],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiGetDocumentByIdConstMeta =>
-      const TaskConstMeta(debugName: "get_document_by_id", argNames: ["id"]);
 
-  @override
-  IndexSpaceUsage crateApiTantivyApiGetIndexSpaceUsage() {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 11)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiGetDocumentByPathConstMeta => const TaskConstMeta(
+            debugName: "get_document_by_path",
+            argNames: ["path"],
+        );
+        
+
+@override Future<List<Document>> crateApiTantivyApiGetDocumentsByPaths({required List<String> paths })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_list_String(paths, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 11, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
+          decodeSuccessData: sse_decode_list_document,
+          decodeErrorData: sse_decode_AnyhowException,
+        )
+        ,
+            constMeta: kCrateApiTantivyApiGetDocumentsByPathsConstMeta,
+            argValues: [paths],
+            apiImpl: this,
+        )); }
+
+
+        TaskConstMeta get kCrateApiTantivyApiGetDocumentsByPathsConstMeta => const TaskConstMeta(
+            debugName: "get_documents_by_paths",
+            argNames: ["paths"],
+        );
+        
+
+@override IndexSpaceUsage crateApiTantivyApiGetIndexSpaceUsage()  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 12)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_index_space_usage,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiGetIndexSpaceUsageConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiGetIndexSpaceUsageConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiGetIndexSpaceUsageConstMeta =>
-      const TaskConstMeta(debugName: "get_index_space_usage", argNames: []);
 
-  @override
-  BigInt crateApiTantivyApiGetNumDocs() {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 12)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiGetIndexSpaceUsageConstMeta => const TaskConstMeta(
+            debugName: "get_index_space_usage",
+            argNames: [],
+        );
+        
+
+@override BigInt crateApiTantivyApiGetNumDocs()  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 13)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_u_64,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiGetNumDocsConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiGetNumDocsConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiGetNumDocsConstMeta =>
-      const TaskConstMeta(debugName: "get_num_docs", argNames: []);
 
-  @override
-  String crateApiSimpleGreet({required String name}) {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(name, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 13)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiGetNumDocsConstMeta => const TaskConstMeta(
+            debugName: "get_num_docs",
+            argNames: [],
+        );
+        
+
+@override Future<List<ScanState>> crateApiTantivyApiGetScanStates()  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 14, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
+          decodeSuccessData: sse_decode_list_scan_state,
+          decodeErrorData: sse_decode_AnyhowException,
+        )
+        ,
+            constMeta: kCrateApiTantivyApiGetScanStatesConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
+
+
+        TaskConstMeta get kCrateApiTantivyApiGetScanStatesConstMeta => const TaskConstMeta(
+            debugName: "get_scan_states",
+            argNames: [],
+        );
+        
+
+@override String crateApiSimpleGreet({required String name })  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(name, serializer);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 15)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_String,
           decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleGreetConstMeta,
-        argValues: [name],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiSimpleGreetConstMeta,
+            argValues: [name],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiSimpleGreetConstMeta =>
-      const TaskConstMeta(debugName: "greet", argNames: ["name"]);
 
-  @override
-  Future<void> crateApiSimpleInitApp() {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 14,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiSimpleGreetConstMeta => const TaskConstMeta(
+            debugName: "greet",
+            argNames: ["name"],
+        );
+        
+
+@override Future<void> crateApiSimpleInitApp()  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 16, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: null,
-        ),
-        constMeta: kCrateApiSimpleInitAppConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiSimpleInitAppConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiSimpleInitAppConstMeta =>
-      const TaskConstMeta(debugName: "init_app", argNames: []);
 
-  @override
-  void crateApiTantivyApiInitTantivy({
-    required String dirPath,
-    String? tokenizerType,
-  }) {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(dirPath, serializer);
-          sse_encode_opt_String(tokenizerType, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 15)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiSimpleInitAppConstMeta => const TaskConstMeta(
+            debugName: "init_app",
+            argNames: [],
+        );
+        
+
+@override void crateApiTantivyApiInitTantivy({required String dirPath , String? tokenizerType })  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(dirPath, serializer);
+sse_encode_opt_String(tokenizerType, serializer);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 17)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiInitTantivyConstMeta,
-        argValues: [dirPath, tokenizerType],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiInitTantivyConstMeta,
+            argValues: [dirPath, tokenizerType],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiInitTantivyConstMeta =>
-      const TaskConstMeta(
-        debugName: "init_tantivy",
-        argNames: ["dirPath", "tokenizerType"],
-      );
 
-  @override
-  List<String> crateApiTantivyApiListIndexSegmentFiles() {
-    return handler.executeSync(
-      SyncTask(
-        callFfi: () {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 16)!;
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiInitTantivyConstMeta => const TaskConstMeta(
+            debugName: "init_tantivy",
+            argNames: ["dirPath", "tokenizerType"],
+        );
+        
+
+@override Future<List<Document>> crateApiTantivyApiListAlbumDocuments({required String artist , required String album })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(artist, serializer);
+sse_encode_String(album, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 18, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
+          decodeSuccessData: sse_decode_list_document,
+          decodeErrorData: sse_decode_AnyhowException,
+        )
+        ,
+            constMeta: kCrateApiTantivyApiListAlbumDocumentsConstMeta,
+            argValues: [artist, album],
+            apiImpl: this,
+        )); }
+
+
+        TaskConstMeta get kCrateApiTantivyApiListAlbumDocumentsConstMeta => const TaskConstMeta(
+            debugName: "list_album_documents",
+            argNames: ["artist", "album"],
+        );
+        
+
+@override Future<List<AlbumInfo>> crateApiTantivyApiListAlbums()  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 19, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
+          decodeSuccessData: sse_decode_list_album_info,
+          decodeErrorData: sse_decode_AnyhowException,
+        )
+        ,
+            constMeta: kCrateApiTantivyApiListAlbumsConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
+
+
+        TaskConstMeta get kCrateApiTantivyApiListAlbumsConstMeta => const TaskConstMeta(
+            debugName: "list_albums",
+            argNames: [],
+        );
+        
+
+@override Future<List<Document>> crateApiTantivyApiListDocuments({required BigInt offset , required BigInt limit , required SortOrder sort })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_usize(offset, serializer);
+sse_encode_usize(limit, serializer);
+sse_encode_sort_order(sort, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 20, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
+          decodeSuccessData: sse_decode_list_document,
+          decodeErrorData: sse_decode_AnyhowException,
+        )
+        ,
+            constMeta: kCrateApiTantivyApiListDocumentsConstMeta,
+            argValues: [offset, limit, sort],
+            apiImpl: this,
+        )); }
+
+
+        TaskConstMeta get kCrateApiTantivyApiListDocumentsConstMeta => const TaskConstMeta(
+            debugName: "list_documents",
+            argNames: ["offset", "limit", "sort"],
+        );
+        
+
+@override List<String> crateApiTantivyApiListIndexSegmentFiles()  { return handler.executeSync(SyncTask(
+            callFfi: () {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 21)!;
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_list_String,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiListIndexSegmentFilesConstMeta,
-        argValues: [],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiListIndexSegmentFilesConstMeta,
+            argValues: [],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiListIndexSegmentFilesConstMeta =>
-      const TaskConstMeta(debugName: "list_index_segment_files", argNames: []);
 
-  @override
-  Future<SearchResponse> crateApiTantivyApiSearchDocuments({
-    required String query,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(query, serializer);
-          sse_encode_usize(topK, serializer);
-          sse_encode_opt_box_autoadd_usize(offset, serializer);
-          sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 17,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiListIndexSegmentFilesConstMeta => const TaskConstMeta(
+            debugName: "list_index_segment_files",
+            argNames: [],
+        );
+        
+
+@override Future<SearchResponse> crateApiTantivyApiSearchDocuments({required String query , required BigInt topK , BigInt? offset , bool? enableSnippet })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(query, serializer);
+sse_encode_usize(topK, serializer);
+sse_encode_opt_box_autoadd_usize(offset, serializer);
+sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 22, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_search_response,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSearchDocumentsConstMeta,
-        argValues: [query, topK, offset, enableSnippet],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchDocumentsConstMeta,
+            argValues: [query, topK, offset, enableSnippet],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSearchDocumentsConstMeta =>
-      const TaskConstMeta(
-        debugName: "search_documents",
-        argNames: ["query", "topK", "offset", "enableSnippet"],
-      );
 
-  @override
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsExists({
-    required String fieldName,
-    required BigInt topK,
-    BigInt? offset,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(fieldName, serializer);
-          sse_encode_usize(topK, serializer);
-          sse_encode_opt_box_autoadd_usize(offset, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 18,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSearchDocumentsConstMeta => const TaskConstMeta(
+            debugName: "search_documents",
+            argNames: ["query", "topK", "offset", "enableSnippet"],
+        );
+        
+
+@override Future<SearchResponse> crateApiTantivyApiSearchDocumentsExists({required String fieldName , required BigInt topK , BigInt? offset })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(fieldName, serializer);
+sse_encode_usize(topK, serializer);
+sse_encode_opt_box_autoadd_usize(offset, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 23, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_search_response,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSearchDocumentsExistsConstMeta,
-        argValues: [fieldName, topK, offset],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchDocumentsExistsConstMeta,
+            argValues: [fieldName, topK, offset],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSearchDocumentsExistsConstMeta =>
-      const TaskConstMeta(
-        debugName: "search_documents_exists",
-        argNames: ["fieldName", "topK", "offset"],
-      );
 
-  @override
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsFuzzy({
-    required String term,
-    int? distance,
-    bool? transpositionCostOne,
-    bool? prefix,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(term, serializer);
-          sse_encode_opt_box_autoadd_u_8(distance, serializer);
-          sse_encode_opt_box_autoadd_bool(transpositionCostOne, serializer);
-          sse_encode_opt_box_autoadd_bool(prefix, serializer);
-          sse_encode_usize(topK, serializer);
-          sse_encode_opt_box_autoadd_usize(offset, serializer);
-          sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 19,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSearchDocumentsExistsConstMeta => const TaskConstMeta(
+            debugName: "search_documents_exists",
+            argNames: ["fieldName", "topK", "offset"],
+        );
+        
+
+@override Future<SearchResponse> crateApiTantivyApiSearchDocumentsFuzzy({required String term , int? distance , bool? transpositionCostOne , bool? prefix , required BigInt topK , BigInt? offset , bool? enableSnippet })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(term, serializer);
+sse_encode_opt_box_autoadd_u_8(distance, serializer);
+sse_encode_opt_box_autoadd_bool(transpositionCostOne, serializer);
+sse_encode_opt_box_autoadd_bool(prefix, serializer);
+sse_encode_usize(topK, serializer);
+sse_encode_opt_box_autoadd_usize(offset, serializer);
+sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 24, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_search_response,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSearchDocumentsFuzzyConstMeta,
-        argValues: [
-          term,
-          distance,
-          transpositionCostOne,
-          prefix,
-          topK,
-          offset,
-          enableSnippet,
-        ],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchDocumentsFuzzyConstMeta,
+            argValues: [term, distance, transpositionCostOne, prefix, topK, offset, enableSnippet],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSearchDocumentsFuzzyConstMeta =>
-      const TaskConstMeta(
-        debugName: "search_documents_fuzzy",
-        argNames: [
-          "term",
-          "distance",
-          "transpositionCostOne",
-          "prefix",
-          "topK",
-          "offset",
-          "enableSnippet",
-        ],
-      );
 
-  @override
-  Future<LenientSearchResponse> crateApiTantivyApiSearchDocumentsLenient({
-    required String query,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-    bool? conjunctionByDefault,
-    double? titleBoost,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(query, serializer);
-          sse_encode_usize(topK, serializer);
-          sse_encode_opt_box_autoadd_usize(offset, serializer);
-          sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
-          sse_encode_opt_box_autoadd_bool(conjunctionByDefault, serializer);
-          sse_encode_opt_box_autoadd_f_32(titleBoost, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 20,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSearchDocumentsFuzzyConstMeta => const TaskConstMeta(
+            debugName: "search_documents_fuzzy",
+            argNames: ["term", "distance", "transpositionCostOne", "prefix", "topK", "offset", "enableSnippet"],
+        );
+        
+
+@override Future<LenientSearchResponse> crateApiTantivyApiSearchDocumentsLenient({required String query , required BigInt topK , BigInt? offset , bool? enableSnippet , bool? conjunctionByDefault , double? titleBoost })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(query, serializer);
+sse_encode_usize(topK, serializer);
+sse_encode_opt_box_autoadd_usize(offset, serializer);
+sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
+sse_encode_opt_box_autoadd_bool(conjunctionByDefault, serializer);
+sse_encode_opt_box_autoadd_f_32(titleBoost, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 25, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_lenient_search_response,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSearchDocumentsLenientConstMeta,
-        argValues: [
-          query,
-          topK,
-          offset,
-          enableSnippet,
-          conjunctionByDefault,
-          titleBoost,
-        ],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchDocumentsLenientConstMeta,
+            argValues: [query, topK, offset, enableSnippet, conjunctionByDefault, titleBoost],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSearchDocumentsLenientConstMeta =>
-      const TaskConstMeta(
-        debugName: "search_documents_lenient",
-        argNames: [
-          "query",
-          "topK",
-          "offset",
-          "enableSnippet",
-          "conjunctionByDefault",
-          "titleBoost",
-        ],
-      );
 
-  @override
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegex({
-    required String pattern,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(pattern, serializer);
-          sse_encode_usize(topK, serializer);
-          sse_encode_opt_box_autoadd_usize(offset, serializer);
-          sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 21,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSearchDocumentsLenientConstMeta => const TaskConstMeta(
+            debugName: "search_documents_lenient",
+            argNames: ["query", "topK", "offset", "enableSnippet", "conjunctionByDefault", "titleBoost"],
+        );
+        
+
+@override Future<SearchResponse> crateApiTantivyApiSearchDocumentsPrefix({required String query , required BigInt topK })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(query, serializer);
+sse_encode_usize(topK, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 26, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_search_response,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSearchDocumentsRegexConstMeta,
-        argValues: [pattern, topK, offset, enableSnippet],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchDocumentsPrefixConstMeta,
+            argValues: [query, topK],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSearchDocumentsRegexConstMeta =>
-      const TaskConstMeta(
-        debugName: "search_documents_regex",
-        argNames: ["pattern", "topK", "offset", "enableSnippet"],
-      );
 
-  @override
-  Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegexPhrase({
-    required List<String> patterns,
-    int? slop,
-    int? maxExpansions,
-    required BigInt topK,
-    BigInt? offset,
-    bool? enableSnippet,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_list_String(patterns, serializer);
-          sse_encode_opt_box_autoadd_u_32(slop, serializer);
-          sse_encode_opt_box_autoadd_u_32(maxExpansions, serializer);
-          sse_encode_usize(topK, serializer);
-          sse_encode_opt_box_autoadd_usize(offset, serializer);
-          sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 22,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSearchDocumentsPrefixConstMeta => const TaskConstMeta(
+            debugName: "search_documents_prefix",
+            argNames: ["query", "topK"],
+        );
+        
+
+@override Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegex({required String pattern , required BigInt topK , BigInt? offset , bool? enableSnippet })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(pattern, serializer);
+sse_encode_usize(topK, serializer);
+sse_encode_opt_box_autoadd_usize(offset, serializer);
+sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 27, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_search_response,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSearchDocumentsRegexPhraseConstMeta,
-        argValues: [patterns, slop, maxExpansions, topK, offset, enableSnippet],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchDocumentsRegexConstMeta,
+            argValues: [pattern, topK, offset, enableSnippet],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSearchDocumentsRegexPhraseConstMeta =>
-      const TaskConstMeta(
-        debugName: "search_documents_regex_phrase",
-        argNames: [
-          "patterns",
-          "slop",
-          "maxExpansions",
-          "topK",
-          "offset",
-          "enableSnippet",
-        ],
-      );
 
-  @override
-  Future<SearchResponse> crateApiTantivyApiSearchSimilarDocuments({
-    required String id,
-    required BigInt topK,
-    BigInt? minDocFrequency,
-    BigInt? maxDocFrequency,
-    BigInt? minTermFrequency,
-    BigInt? minWordLength,
-    BigInt? maxWordLength,
-    double? boostFactor,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(id, serializer);
-          sse_encode_usize(topK, serializer);
-          sse_encode_opt_box_autoadd_u_64(minDocFrequency, serializer);
-          sse_encode_opt_box_autoadd_u_64(maxDocFrequency, serializer);
-          sse_encode_opt_box_autoadd_usize(minTermFrequency, serializer);
-          sse_encode_opt_box_autoadd_usize(minWordLength, serializer);
-          sse_encode_opt_box_autoadd_usize(maxWordLength, serializer);
-          sse_encode_opt_box_autoadd_f_32(boostFactor, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 23,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSearchDocumentsRegexConstMeta => const TaskConstMeta(
+            debugName: "search_documents_regex",
+            argNames: ["pattern", "topK", "offset", "enableSnippet"],
+        );
+        
+
+@override Future<SearchResponse> crateApiTantivyApiSearchDocumentsRegexPhrase({required List<String> patterns , int? slop , int? maxExpansions , required BigInt topK , BigInt? offset , bool? enableSnippet })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_list_String(patterns, serializer);
+sse_encode_opt_box_autoadd_u_32(slop, serializer);
+sse_encode_opt_box_autoadd_u_32(maxExpansions, serializer);
+sse_encode_usize(topK, serializer);
+sse_encode_opt_box_autoadd_usize(offset, serializer);
+sse_encode_opt_box_autoadd_bool(enableSnippet, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 28, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_search_response,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSearchSimilarDocumentsConstMeta,
-        argValues: [
-          id,
-          topK,
-          minDocFrequency,
-          maxDocFrequency,
-          minTermFrequency,
-          minWordLength,
-          maxWordLength,
-          boostFactor,
-        ],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchDocumentsRegexPhraseConstMeta,
+            argValues: [patterns, slop, maxExpansions, topK, offset, enableSnippet],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSearchSimilarDocumentsConstMeta =>
-      const TaskConstMeta(
-        debugName: "search_similar_documents",
-        argNames: [
-          "id",
-          "topK",
-          "minDocFrequency",
-          "maxDocFrequency",
-          "minTermFrequency",
-          "minWordLength",
-          "maxWordLength",
-          "boostFactor",
-        ],
-      );
 
-  @override
-  Future<List<TermSuggestion>> crateApiTantivyApiSuggestTerms({
-    required String prefix,
-    BigInt? limit,
-    bool? includeTitle,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(prefix, serializer);
-          sse_encode_opt_box_autoadd_usize(limit, serializer);
-          sse_encode_opt_box_autoadd_bool(includeTitle, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 24,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSearchDocumentsRegexPhraseConstMeta => const TaskConstMeta(
+            debugName: "search_documents_regex_phrase",
+            argNames: ["patterns", "slop", "maxExpansions", "topK", "offset", "enableSnippet"],
+        );
+        
+
+@override Future<SearchResponse> crateApiTantivyApiSearchSimilarDocuments({required String path , required BigInt topK , BigInt? minDocFrequency , BigInt? maxDocFrequency , BigInt? minTermFrequency , BigInt? minWordLength , BigInt? maxWordLength , double? boostFactor })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(path, serializer);
+sse_encode_usize(topK, serializer);
+sse_encode_opt_box_autoadd_u_64(minDocFrequency, serializer);
+sse_encode_opt_box_autoadd_u_64(maxDocFrequency, serializer);
+sse_encode_opt_box_autoadd_usize(minTermFrequency, serializer);
+sse_encode_opt_box_autoadd_usize(minWordLength, serializer);
+sse_encode_opt_box_autoadd_usize(maxWordLength, serializer);
+sse_encode_opt_box_autoadd_f_32(boostFactor, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 29, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
+          decodeSuccessData: sse_decode_search_response,
+          decodeErrorData: sse_decode_AnyhowException,
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSearchSimilarDocumentsConstMeta,
+            argValues: [path, topK, minDocFrequency, maxDocFrequency, minTermFrequency, minWordLength, maxWordLength, boostFactor],
+            apiImpl: this,
+        )); }
+
+
+        TaskConstMeta get kCrateApiTantivyApiSearchSimilarDocumentsConstMeta => const TaskConstMeta(
+            debugName: "search_similar_documents",
+            argNames: ["path", "topK", "minDocFrequency", "maxDocFrequency", "minTermFrequency", "minWordLength", "maxWordLength", "boostFactor"],
+        );
+        
+
+@override Future<List<TermSuggestion>> crateApiTantivyApiSuggestTerms({required String prefix , BigInt? limit , bool? includeTitle })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_String(prefix, serializer);
+sse_encode_opt_box_autoadd_usize(limit, serializer);
+sse_encode_opt_box_autoadd_bool(includeTitle, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 30, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_list_term_suggestion,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiSuggestTermsConstMeta,
-        argValues: [prefix, limit, includeTitle],
-        apiImpl: this,
-      ),
-    );
-  }
+        )
+        ,
+            constMeta: kCrateApiTantivyApiSuggestTermsConstMeta,
+            argValues: [prefix, limit, includeTitle],
+            apiImpl: this,
+        )); }
 
-  TaskConstMeta get kCrateApiTantivyApiSuggestTermsConstMeta =>
-      const TaskConstMeta(
-        debugName: "suggest_terms",
-        argNames: ["prefix", "limit", "includeTitle"],
-      );
 
-  @override
-  Future<void> crateApiTantivyApiUpdateDocument({required Document doc}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_box_autoadd_document(doc, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 25,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
+        TaskConstMeta get kCrateApiTantivyApiSuggestTermsConstMeta => const TaskConstMeta(
+            debugName: "suggest_terms",
+            argNames: ["prefix", "limit", "includeTitle"],
+        );
+        
+
+@override Future<void> crateApiTantivyApiUpdateDocument({required Document doc })  { return handler.executeNormal(NormalTask(
+            callFfi: (port_) {
+              
+            final serializer = SseSerializer(generalizedFrbRustBinding);sse_encode_box_autoadd_document(doc, serializer);
+            pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 31, port: port_);
+            
+            },
+            codec: 
+        SseCodec(
           decodeSuccessData: sse_decode_unit,
           decodeErrorData: sse_decode_AnyhowException,
-        ),
-        constMeta: kCrateApiTantivyApiUpdateDocumentConstMeta,
-        argValues: [doc],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiTantivyApiUpdateDocumentConstMeta =>
-      const TaskConstMeta(debugName: "update_document", argNames: ["doc"]);
-
-  @protected
-  AnyhowException dco_decode_AnyhowException(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return AnyhowException(raw as String);
-  }
-
-  @protected
-  String dco_decode_String(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as String;
-  }
-
-  @protected
-  bool dco_decode_bool(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as bool;
-  }
-
-  @protected
-  bool dco_decode_box_autoadd_bool(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as bool;
-  }
-
-  @protected
-  Document dco_decode_box_autoadd_document(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_document(raw);
-  }
-
-  @protected
-  double dco_decode_box_autoadd_f_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as double;
-  }
-
-  @protected
-  TextRange dco_decode_box_autoadd_text_range(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_text_range(raw);
-  }
-
-  @protected
-  int dco_decode_box_autoadd_u_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as int;
-  }
-
-  @protected
-  BigInt dco_decode_box_autoadd_u_64(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_u_64(raw);
-  }
-
-  @protected
-  int dco_decode_box_autoadd_u_8(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as int;
-  }
-
-  @protected
-  BigInt dco_decode_box_autoadd_usize(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_usize(raw);
-  }
-
-  @protected
-  Document dco_decode_document(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 3)
-      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
-    return Document(
-      id: dco_decode_String(arr[0]),
-      title: dco_decode_opt_String(arr[1]),
-      text: dco_decode_String(arr[2]),
-    );
-  }
-
-  @protected
-  double dco_decode_f_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as double;
-  }
-
-  @protected
-  IndexSpaceUsage dco_decode_index_space_usage(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 10)
-      throw Exception('unexpected arr length: expect 10 but see ${arr.length}');
-    return IndexSpaceUsage(
-      totalBytes: dco_decode_u_64(arr[0]),
-      numDocs: dco_decode_u_64(arr[1]),
-      numSegments: dco_decode_usize(arr[2]),
-      storeBytes: dco_decode_u_64(arr[3]),
-      postingsBytes: dco_decode_u_64(arr[4]),
-      positionsBytes: dco_decode_u_64(arr[5]),
-      fastFieldsBytes: dco_decode_u_64(arr[6]),
-      termdictBytes: dco_decode_u_64(arr[7]),
-      fieldnormsBytes: dco_decode_u_64(arr[8]),
-      deletesBytes: dco_decode_u_64(arr[9]),
-    );
-  }
-
-  @protected
-  LenientSearchResponse dco_decode_lenient_search_response(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 3)
-      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
-    return LenientSearchResponse(
-      totalHits: dco_decode_usize(arr[0]),
-      results: dco_decode_list_search_result(arr[1]),
-      errors: dco_decode_list_String(arr[2]),
-    );
-  }
-
-  @protected
-  List<String> dco_decode_list_String(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_String).toList();
-  }
-
-  @protected
-  List<Document> dco_decode_list_document(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_document).toList();
-  }
-
-  @protected
-  Uint8List dco_decode_list_prim_u_8_strict(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as Uint8List;
-  }
-
-  @protected
-  List<SearchResult> dco_decode_list_search_result(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_search_result).toList();
-  }
-
-  @protected
-  List<TermSuggestion> dco_decode_list_term_suggestion(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_term_suggestion).toList();
-  }
-
-  @protected
-  List<TextRange> dco_decode_list_text_range(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_text_range).toList();
-  }
-
-  @protected
-  String? dco_decode_opt_String(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_String(raw);
-  }
-
-  @protected
-  bool? dco_decode_opt_box_autoadd_bool(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_bool(raw);
-  }
-
-  @protected
-  Document? dco_decode_opt_box_autoadd_document(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_document(raw);
-  }
-
-  @protected
-  double? dco_decode_opt_box_autoadd_f_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_f_32(raw);
-  }
-
-  @protected
-  TextRange? dco_decode_opt_box_autoadd_text_range(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_text_range(raw);
-  }
-
-  @protected
-  int? dco_decode_opt_box_autoadd_u_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_u_32(raw);
-  }
-
-  @protected
-  BigInt? dco_decode_opt_box_autoadd_u_64(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_u_64(raw);
-  }
-
-  @protected
-  int? dco_decode_opt_box_autoadd_u_8(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_u_8(raw);
-  }
-
-  @protected
-  BigInt? dco_decode_opt_box_autoadd_usize(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_usize(raw);
-  }
-
-  @protected
-  List<TextRange>? dco_decode_opt_list_text_range(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_list_text_range(raw);
-  }
-
-  @protected
-  SearchResponse dco_decode_search_response(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 2)
-      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
-    return SearchResponse(
-      totalHits: dco_decode_usize(arr[0]),
-      results: dco_decode_list_search_result(arr[1]),
-    );
-  }
-
-  @protected
-  SearchResult dco_decode_search_result(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 6)
-      throw Exception('unexpected arr length: expect 6 but see ${arr.length}');
-    return SearchResult(
-      score: dco_decode_f_32(arr[0]),
-      doc: dco_decode_document(arr[1]),
-      snippet: dco_decode_opt_String(arr[2]),
-      titleSnippet: dco_decode_opt_String(arr[3]),
-      fragmentRange: dco_decode_opt_box_autoadd_text_range(arr[4]),
-      highlightedRanges: dco_decode_opt_list_text_range(arr[5]),
-    );
-  }
-
-  @protected
-  TermSuggestion dco_decode_term_suggestion(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 2)
-      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
-    return TermSuggestion(
-      term: dco_decode_String(arr[0]),
-      docFreq: dco_decode_u_32(arr[1]),
-    );
-  }
-
-  @protected
-  TextRange dco_decode_text_range(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 2)
-      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
-    return TextRange(
-      start: dco_decode_usize(arr[0]),
-      end: dco_decode_usize(arr[1]),
-    );
-  }
-
-  @protected
-  int dco_decode_u_32(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as int;
-  }
-
-  @protected
-  BigInt dco_decode_u_64(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dcoDecodeU64(raw);
-  }
-
-  @protected
-  int dco_decode_u_8(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw as int;
-  }
-
-  @protected
-  void dco_decode_unit(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return;
-  }
-
-  @protected
-  BigInt dco_decode_usize(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dcoDecodeU64(raw);
-  }
-
-  @protected
-  AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner = sse_decode_String(deserializer);
-    return AnyhowException(inner);
-  }
-
-  @protected
-  String sse_decode_String(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner = sse_decode_list_prim_u_8_strict(deserializer);
-    return utf8.decoder.convert(inner);
-  }
-
-  @protected
-  bool sse_decode_bool(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint8() != 0;
-  }
-
-  @protected
-  bool sse_decode_box_autoadd_bool(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_bool(deserializer));
-  }
-
-  @protected
-  Document sse_decode_box_autoadd_document(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_document(deserializer));
-  }
-
-  @protected
-  double sse_decode_box_autoadd_f_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_f_32(deserializer));
-  }
-
-  @protected
-  TextRange sse_decode_box_autoadd_text_range(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_text_range(deserializer));
-  }
-
-  @protected
-  int sse_decode_box_autoadd_u_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_u_32(deserializer));
-  }
-
-  @protected
-  BigInt sse_decode_box_autoadd_u_64(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_u_64(deserializer));
-  }
-
-  @protected
-  int sse_decode_box_autoadd_u_8(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_u_8(deserializer));
-  }
-
-  @protected
-  BigInt sse_decode_box_autoadd_usize(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_usize(deserializer));
-  }
-
-  @protected
-  Document sse_decode_document(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_id = sse_decode_String(deserializer);
-    var var_title = sse_decode_opt_String(deserializer);
-    var var_text = sse_decode_String(deserializer);
-    return Document(id: var_id, title: var_title, text: var_text);
-  }
-
-  @protected
-  double sse_decode_f_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getFloat32();
-  }
-
-  @protected
-  IndexSpaceUsage sse_decode_index_space_usage(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_totalBytes = sse_decode_u_64(deserializer);
-    var var_numDocs = sse_decode_u_64(deserializer);
-    var var_numSegments = sse_decode_usize(deserializer);
-    var var_storeBytes = sse_decode_u_64(deserializer);
-    var var_postingsBytes = sse_decode_u_64(deserializer);
-    var var_positionsBytes = sse_decode_u_64(deserializer);
-    var var_fastFieldsBytes = sse_decode_u_64(deserializer);
-    var var_termdictBytes = sse_decode_u_64(deserializer);
-    var var_fieldnormsBytes = sse_decode_u_64(deserializer);
-    var var_deletesBytes = sse_decode_u_64(deserializer);
-    return IndexSpaceUsage(
-      totalBytes: var_totalBytes,
-      numDocs: var_numDocs,
-      numSegments: var_numSegments,
-      storeBytes: var_storeBytes,
-      postingsBytes: var_postingsBytes,
-      positionsBytes: var_positionsBytes,
-      fastFieldsBytes: var_fastFieldsBytes,
-      termdictBytes: var_termdictBytes,
-      fieldnormsBytes: var_fieldnormsBytes,
-      deletesBytes: var_deletesBytes,
-    );
-  }
-
-  @protected
-  LenientSearchResponse sse_decode_lenient_search_response(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_totalHits = sse_decode_usize(deserializer);
-    var var_results = sse_decode_list_search_result(deserializer);
-    var var_errors = sse_decode_list_String(deserializer);
-    return LenientSearchResponse(
-      totalHits: var_totalHits,
-      results: var_results,
-      errors: var_errors,
-    );
-  }
-
-  @protected
-  List<String> sse_decode_list_String(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <String>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_String(deserializer));
-    }
-    return ans_;
-  }
-
-  @protected
-  List<Document> sse_decode_list_document(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <Document>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_document(deserializer));
-    }
-    return ans_;
-  }
-
-  @protected
-  Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var len_ = sse_decode_i_32(deserializer);
-    return deserializer.buffer.getUint8List(len_);
-  }
-
-  @protected
-  List<SearchResult> sse_decode_list_search_result(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <SearchResult>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_search_result(deserializer));
-    }
-    return ans_;
-  }
-
-  @protected
-  List<TermSuggestion> sse_decode_list_term_suggestion(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <TermSuggestion>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_term_suggestion(deserializer));
-    }
-    return ans_;
-  }
-
-  @protected
-  List<TextRange> sse_decode_list_text_range(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <TextRange>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_text_range(deserializer));
-    }
-    return ans_;
-  }
-
-  @protected
-  String? sse_decode_opt_String(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_String(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_bool(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  Document? sse_decode_opt_box_autoadd_document(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_document(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  double? sse_decode_opt_box_autoadd_f_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_f_32(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  TextRange? sse_decode_opt_box_autoadd_text_range(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_text_range(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  int? sse_decode_opt_box_autoadd_u_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_u_32(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  BigInt? sse_decode_opt_box_autoadd_u_64(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_u_64(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  int? sse_decode_opt_box_autoadd_u_8(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_u_8(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  BigInt? sse_decode_opt_box_autoadd_usize(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_usize(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  List<TextRange>? sse_decode_opt_list_text_range(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_list_text_range(deserializer));
-    } else {
-      return null;
-    }
-  }
-
-  @protected
-  SearchResponse sse_decode_search_response(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_totalHits = sse_decode_usize(deserializer);
-    var var_results = sse_decode_list_search_result(deserializer);
-    return SearchResponse(totalHits: var_totalHits, results: var_results);
-  }
-
-  @protected
-  SearchResult sse_decode_search_result(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_score = sse_decode_f_32(deserializer);
-    var var_doc = sse_decode_document(deserializer);
-    var var_snippet = sse_decode_opt_String(deserializer);
-    var var_titleSnippet = sse_decode_opt_String(deserializer);
-    var var_fragmentRange = sse_decode_opt_box_autoadd_text_range(deserializer);
-    var var_highlightedRanges = sse_decode_opt_list_text_range(deserializer);
-    return SearchResult(
-      score: var_score,
-      doc: var_doc,
-      snippet: var_snippet,
-      titleSnippet: var_titleSnippet,
-      fragmentRange: var_fragmentRange,
-      highlightedRanges: var_highlightedRanges,
-    );
-  }
-
-  @protected
-  TermSuggestion sse_decode_term_suggestion(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_term = sse_decode_String(deserializer);
-    var var_docFreq = sse_decode_u_32(deserializer);
-    return TermSuggestion(term: var_term, docFreq: var_docFreq);
-  }
-
-  @protected
-  TextRange sse_decode_text_range(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_start = sse_decode_usize(deserializer);
-    var var_end = sse_decode_usize(deserializer);
-    return TextRange(start: var_start, end: var_end);
-  }
-
-  @protected
-  int sse_decode_u_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint32();
-  }
-
-  @protected
-  BigInt sse_decode_u_64(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getBigUint64();
-  }
-
-  @protected
-  int sse_decode_u_8(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint8();
-  }
-
-  @protected
-  void sse_decode_unit(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-  }
-
-  @protected
-  BigInt sse_decode_usize(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getBigUint64();
-  }
-
-  @protected
-  int sse_decode_i_32(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getInt32();
-  }
-
-  @protected
-  void sse_encode_AnyhowException(
-    AnyhowException self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_String(self.message, serializer);
-  }
-
-  @protected
-  void sse_encode_String(String self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
-  }
-
-  @protected
-  void sse_encode_bool(bool self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint8(self ? 1 : 0);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_bool(bool self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_bool(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_document(
-    Document self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_document(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_f_32(double self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_f_32(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_text_range(
-    TextRange self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_text_range(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_u_32(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_u_32(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_u_64(BigInt self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_u_64(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_u_8(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_u_8(self, serializer);
-  }
-
-  @protected
-  void sse_encode_box_autoadd_usize(BigInt self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(self, serializer);
-  }
-
-  @protected
-  void sse_encode_document(Document self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_String(self.id, serializer);
-    sse_encode_opt_String(self.title, serializer);
-    sse_encode_String(self.text, serializer);
-  }
-
-  @protected
-  void sse_encode_f_32(double self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putFloat32(self);
-  }
-
-  @protected
-  void sse_encode_index_space_usage(
-    IndexSpaceUsage self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_u_64(self.totalBytes, serializer);
-    sse_encode_u_64(self.numDocs, serializer);
-    sse_encode_usize(self.numSegments, serializer);
-    sse_encode_u_64(self.storeBytes, serializer);
-    sse_encode_u_64(self.postingsBytes, serializer);
-    sse_encode_u_64(self.positionsBytes, serializer);
-    sse_encode_u_64(self.fastFieldsBytes, serializer);
-    sse_encode_u_64(self.termdictBytes, serializer);
-    sse_encode_u_64(self.fieldnormsBytes, serializer);
-    sse_encode_u_64(self.deletesBytes, serializer);
-  }
-
-  @protected
-  void sse_encode_lenient_search_response(
-    LenientSearchResponse self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(self.totalHits, serializer);
-    sse_encode_list_search_result(self.results, serializer);
-    sse_encode_list_String(self.errors, serializer);
-  }
-
-  @protected
-  void sse_encode_list_String(List<String> self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_String(item, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_list_document(List<Document> self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_document(item, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_list_prim_u_8_strict(
-    Uint8List self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    serializer.buffer.putUint8List(self);
-  }
-
-  @protected
-  void sse_encode_list_search_result(
-    List<SearchResult> self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_search_result(item, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_list_term_suggestion(
-    List<TermSuggestion> self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_term_suggestion(item, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_list_text_range(
-    List<TextRange> self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_text_range(item, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_String(String? self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_String(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_bool(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_document(
-    Document? self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_document(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_f_32(double? self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_f_32(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_text_range(
-    TextRange? self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_text_range(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_u_32(int? self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_u_32(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_u_64(BigInt? self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_u_64(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_u_8(int? self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_u_8(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_box_autoadd_usize(
-    BigInt? self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_usize(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_opt_list_text_range(
-    List<TextRange>? self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_list_text_range(self, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_search_response(
-    SearchResponse self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(self.totalHits, serializer);
-    sse_encode_list_search_result(self.results, serializer);
-  }
-
-  @protected
-  void sse_encode_search_result(SearchResult self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_f_32(self.score, serializer);
-    sse_encode_document(self.doc, serializer);
-    sse_encode_opt_String(self.snippet, serializer);
-    sse_encode_opt_String(self.titleSnippet, serializer);
-    sse_encode_opt_box_autoadd_text_range(self.fragmentRange, serializer);
-    sse_encode_opt_list_text_range(self.highlightedRanges, serializer);
-  }
-
-  @protected
-  void sse_encode_term_suggestion(
-    TermSuggestion self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_String(self.term, serializer);
-    sse_encode_u_32(self.docFreq, serializer);
-  }
-
-  @protected
-  void sse_encode_text_range(TextRange self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_usize(self.start, serializer);
-    sse_encode_usize(self.end, serializer);
-  }
-
-  @protected
-  void sse_encode_u_32(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint32(self);
-  }
-
-  @protected
-  void sse_encode_u_64(BigInt self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putBigUint64(self);
-  }
-
-  @protected
-  void sse_encode_u_8(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint8(self);
-  }
-
-  @protected
-  void sse_encode_unit(void self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-  }
-
-  @protected
-  void sse_encode_usize(BigInt self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putBigUint64(self);
-  }
-
-  @protected
-  void sse_encode_i_32(int self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putInt32(self);
-  }
-}
+        )
+        ,
+            constMeta: kCrateApiTantivyApiUpdateDocumentConstMeta,
+            argValues: [doc],
+            apiImpl: this,
+        )); }
+
+
+        TaskConstMeta get kCrateApiTantivyApiUpdateDocumentConstMeta => const TaskConstMeta(
+            debugName: "update_document",
+            argNames: ["doc"],
+        );
+        
+
+
+
+                  @protected AnyhowException dco_decode_AnyhowException(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return AnyhowException(raw as String); }
+
+@protected String dco_decode_String(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as String; }
+
+@protected AlbumInfo dco_decode_album_info(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 3) throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+                return AlbumInfo(artist: dco_decode_String(arr[0]),
+album: dco_decode_String(arr[1]),
+trackCount: dco_decode_u_64(arr[2]),); }
+
+@protected bool dco_decode_bool(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as bool; }
+
+@protected bool dco_decode_box_autoadd_bool(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as bool; }
+
+@protected Document dco_decode_box_autoadd_document(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return dco_decode_document(raw); }
+
+@protected double dco_decode_box_autoadd_f_32(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as double; }
+
+@protected TextRange dco_decode_box_autoadd_text_range(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return dco_decode_text_range(raw); }
+
+@protected int dco_decode_box_autoadd_u_32(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as int; }
+
+@protected BigInt dco_decode_box_autoadd_u_64(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return dco_decode_u_64(raw); }
+
+@protected int dco_decode_box_autoadd_u_8(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as int; }
+
+@protected BigInt dco_decode_box_autoadd_usize(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return dco_decode_usize(raw); }
+
+@protected Document dco_decode_document(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 10) throw Exception('unexpected arr length: expect 10 but see ${arr.length}');
+                return Document(path: dco_decode_String(arr[0]),
+uid: dco_decode_String(arr[1]),
+title: dco_decode_String(arr[2]),
+artist: dco_decode_String(arr[3]),
+album: dco_decode_opt_String(arr[4]),
+durationMs: dco_decode_opt_box_autoadd_u_64(arr[5]),
+mtime: dco_decode_u_64(arr[6]),
+size: dco_decode_u_64(arr[7]),
+artworkBase64: dco_decode_opt_String(arr[8]),
+lastScannedAt: dco_decode_u_64(arr[9]),); }
+
+@protected double dco_decode_f_32(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as double; }
+
+@protected int dco_decode_i_32(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as int; }
+
+@protected IndexSpaceUsage dco_decode_index_space_usage(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 10) throw Exception('unexpected arr length: expect 10 but see ${arr.length}');
+                return IndexSpaceUsage(totalBytes: dco_decode_u_64(arr[0]),
+numDocs: dco_decode_u_64(arr[1]),
+numSegments: dco_decode_usize(arr[2]),
+storeBytes: dco_decode_u_64(arr[3]),
+postingsBytes: dco_decode_u_64(arr[4]),
+positionsBytes: dco_decode_u_64(arr[5]),
+fastFieldsBytes: dco_decode_u_64(arr[6]),
+termdictBytes: dco_decode_u_64(arr[7]),
+fieldnormsBytes: dco_decode_u_64(arr[8]),
+deletesBytes: dco_decode_u_64(arr[9]),); }
+
+@protected LenientSearchResponse dco_decode_lenient_search_response(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 3) throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+                return LenientSearchResponse(totalHits: dco_decode_usize(arr[0]),
+results: dco_decode_list_search_result(arr[1]),
+errors: dco_decode_list_String(arr[2]),); }
+
+@protected List<String> dco_decode_list_String(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return (raw as List<dynamic>).map(dco_decode_String).toList(); }
+
+@protected List<AlbumInfo> dco_decode_list_album_info(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return (raw as List<dynamic>).map(dco_decode_album_info).toList(); }
+
+@protected List<Document> dco_decode_list_document(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return (raw as List<dynamic>).map(dco_decode_document).toList(); }
+
+@protected Uint8List dco_decode_list_prim_u_8_strict(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as Uint8List; }
+
+@protected List<ScanState> dco_decode_list_scan_state(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return (raw as List<dynamic>).map(dco_decode_scan_state).toList(); }
+
+@protected List<SearchResult> dco_decode_list_search_result(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return (raw as List<dynamic>).map(dco_decode_search_result).toList(); }
+
+@protected List<TermSuggestion> dco_decode_list_term_suggestion(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return (raw as List<dynamic>).map(dco_decode_term_suggestion).toList(); }
+
+@protected List<TextRange> dco_decode_list_text_range(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return (raw as List<dynamic>).map(dco_decode_text_range).toList(); }
+
+@protected String? dco_decode_opt_String(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_String(raw); }
+
+@protected bool? dco_decode_opt_box_autoadd_bool(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_bool(raw); }
+
+@protected Document? dco_decode_opt_box_autoadd_document(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_document(raw); }
+
+@protected double? dco_decode_opt_box_autoadd_f_32(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_f_32(raw); }
+
+@protected TextRange? dco_decode_opt_box_autoadd_text_range(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_text_range(raw); }
+
+@protected int? dco_decode_opt_box_autoadd_u_32(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_u_32(raw); }
+
+@protected BigInt? dco_decode_opt_box_autoadd_u_64(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_u_64(raw); }
+
+@protected int? dco_decode_opt_box_autoadd_u_8(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_u_8(raw); }
+
+@protected BigInt? dco_decode_opt_box_autoadd_usize(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_box_autoadd_usize(raw); }
+
+@protected List<TextRange>? dco_decode_opt_list_text_range(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw == null ? null : dco_decode_list_text_range(raw); }
+
+@protected ScanState dco_decode_scan_state(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 4) throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
+                return ScanState(path: dco_decode_String(arr[0]),
+mtime: dco_decode_u_64(arr[1]),
+size: dco_decode_u_64(arr[2]),
+lastScannedAt: dco_decode_u_64(arr[3]),); }
+
+@protected SearchResponse dco_decode_search_response(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 2) throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+                return SearchResponse(totalHits: dco_decode_usize(arr[0]),
+results: dco_decode_list_search_result(arr[1]),); }
+
+@protected SearchResult dco_decode_search_result(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 7) throw Exception('unexpected arr length: expect 7 but see ${arr.length}');
+                return SearchResult(score: dco_decode_f_32(arr[0]),
+doc: dco_decode_document(arr[1]),
+snippet: dco_decode_opt_String(arr[2]),
+artistSnippet: dco_decode_opt_String(arr[3]),
+albumSnippet: dco_decode_opt_String(arr[4]),
+fragmentRange: dco_decode_opt_box_autoadd_text_range(arr[5]),
+highlightedRanges: dco_decode_opt_list_text_range(arr[6]),); }
+
+@protected SortOrder dco_decode_sort_order(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return SortOrder.values[raw as int]; }
+
+@protected TermSuggestion dco_decode_term_suggestion(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 2) throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+                return TermSuggestion(term: dco_decode_String(arr[0]),
+docFreq: dco_decode_u_32(arr[1]),); }
+
+@protected TextRange dco_decode_text_range(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+final arr = raw as List<dynamic>;
+                if (arr.length != 2) throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+                return TextRange(start: dco_decode_usize(arr[0]),
+end: dco_decode_usize(arr[1]),); }
+
+@protected int dco_decode_u_32(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as int; }
+
+@protected BigInt dco_decode_u_64(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return dcoDecodeU64(raw); }
+
+@protected int dco_decode_u_8(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return raw as int; }
+
+@protected void dco_decode_unit(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return; }
+
+@protected BigInt dco_decode_usize(dynamic raw){ // Codec=Dco (DartCObject based), see doc to use other codecs
+return dcoDecodeU64(raw); }
+
+@protected AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var inner = sse_decode_String(deserializer);
+        return AnyhowException(inner); }
+
+@protected String sse_decode_String(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var inner = sse_decode_list_prim_u_8_strict(deserializer);
+        return utf8.decoder.convert(inner); }
+
+@protected AlbumInfo sse_decode_album_info(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_artist = sse_decode_String(deserializer);
+var var_album = sse_decode_String(deserializer);
+var var_trackCount = sse_decode_u_64(deserializer);
+return AlbumInfo(artist: var_artist, album: var_album, trackCount: var_trackCount); }
+
+@protected bool sse_decode_bool(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return deserializer.buffer.getUint8() != 0; }
+
+@protected bool sse_decode_box_autoadd_bool(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_bool(deserializer)); }
+
+@protected Document sse_decode_box_autoadd_document(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_document(deserializer)); }
+
+@protected double sse_decode_box_autoadd_f_32(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_f_32(deserializer)); }
+
+@protected TextRange sse_decode_box_autoadd_text_range(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_text_range(deserializer)); }
+
+@protected int sse_decode_box_autoadd_u_32(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_u_32(deserializer)); }
+
+@protected BigInt sse_decode_box_autoadd_u_64(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_u_64(deserializer)); }
+
+@protected int sse_decode_box_autoadd_u_8(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_u_8(deserializer)); }
+
+@protected BigInt sse_decode_box_autoadd_usize(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return (sse_decode_usize(deserializer)); }
+
+@protected Document sse_decode_document(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_path = sse_decode_String(deserializer);
+var var_uid = sse_decode_String(deserializer);
+var var_title = sse_decode_String(deserializer);
+var var_artist = sse_decode_String(deserializer);
+var var_album = sse_decode_opt_String(deserializer);
+var var_durationMs = sse_decode_opt_box_autoadd_u_64(deserializer);
+var var_mtime = sse_decode_u_64(deserializer);
+var var_size = sse_decode_u_64(deserializer);
+var var_artworkBase64 = sse_decode_opt_String(deserializer);
+var var_lastScannedAt = sse_decode_u_64(deserializer);
+return Document(path: var_path, uid: var_uid, title: var_title, artist: var_artist, album: var_album, durationMs: var_durationMs, mtime: var_mtime, size: var_size, artworkBase64: var_artworkBase64, lastScannedAt: var_lastScannedAt); }
+
+@protected double sse_decode_f_32(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return deserializer.buffer.getFloat32(); }
+
+@protected int sse_decode_i_32(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return deserializer.buffer.getInt32(); }
+
+@protected IndexSpaceUsage sse_decode_index_space_usage(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_totalBytes = sse_decode_u_64(deserializer);
+var var_numDocs = sse_decode_u_64(deserializer);
+var var_numSegments = sse_decode_usize(deserializer);
+var var_storeBytes = sse_decode_u_64(deserializer);
+var var_postingsBytes = sse_decode_u_64(deserializer);
+var var_positionsBytes = sse_decode_u_64(deserializer);
+var var_fastFieldsBytes = sse_decode_u_64(deserializer);
+var var_termdictBytes = sse_decode_u_64(deserializer);
+var var_fieldnormsBytes = sse_decode_u_64(deserializer);
+var var_deletesBytes = sse_decode_u_64(deserializer);
+return IndexSpaceUsage(totalBytes: var_totalBytes, numDocs: var_numDocs, numSegments: var_numSegments, storeBytes: var_storeBytes, postingsBytes: var_postingsBytes, positionsBytes: var_positionsBytes, fastFieldsBytes: var_fastFieldsBytes, termdictBytes: var_termdictBytes, fieldnormsBytes: var_fieldnormsBytes, deletesBytes: var_deletesBytes); }
+
+@protected LenientSearchResponse sse_decode_lenient_search_response(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_totalHits = sse_decode_usize(deserializer);
+var var_results = sse_decode_list_search_result(deserializer);
+var var_errors = sse_decode_list_String(deserializer);
+return LenientSearchResponse(totalHits: var_totalHits, results: var_results, errors: var_errors); }
+
+@protected List<String> sse_decode_list_String(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+        var len_ = sse_decode_i_32(deserializer);
+        var ans_ = <String>[];
+        for (var idx_ = 0; idx_ < len_; ++idx_) { ans_.add(sse_decode_String(deserializer)); }
+        return ans_;
+         }
+
+@protected List<AlbumInfo> sse_decode_list_album_info(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+        var len_ = sse_decode_i_32(deserializer);
+        var ans_ = <AlbumInfo>[];
+        for (var idx_ = 0; idx_ < len_; ++idx_) { ans_.add(sse_decode_album_info(deserializer)); }
+        return ans_;
+         }
+
+@protected List<Document> sse_decode_list_document(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+        var len_ = sse_decode_i_32(deserializer);
+        var ans_ = <Document>[];
+        for (var idx_ = 0; idx_ < len_; ++idx_) { ans_.add(sse_decode_document(deserializer)); }
+        return ans_;
+         }
+
+@protected Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var len_ = sse_decode_i_32(deserializer);
+                return deserializer.buffer.getUint8List(len_); }
+
+@protected List<ScanState> sse_decode_list_scan_state(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+        var len_ = sse_decode_i_32(deserializer);
+        var ans_ = <ScanState>[];
+        for (var idx_ = 0; idx_ < len_; ++idx_) { ans_.add(sse_decode_scan_state(deserializer)); }
+        return ans_;
+         }
+
+@protected List<SearchResult> sse_decode_list_search_result(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+        var len_ = sse_decode_i_32(deserializer);
+        var ans_ = <SearchResult>[];
+        for (var idx_ = 0; idx_ < len_; ++idx_) { ans_.add(sse_decode_search_result(deserializer)); }
+        return ans_;
+         }
+
+@protected List<TermSuggestion> sse_decode_list_term_suggestion(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+        var len_ = sse_decode_i_32(deserializer);
+        var ans_ = <TermSuggestion>[];
+        for (var idx_ = 0; idx_ < len_; ++idx_) { ans_.add(sse_decode_term_suggestion(deserializer)); }
+        return ans_;
+         }
+
+@protected List<TextRange> sse_decode_list_text_range(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+        var len_ = sse_decode_i_32(deserializer);
+        var ans_ = <TextRange>[];
+        for (var idx_ = 0; idx_ < len_; ++idx_) { ans_.add(sse_decode_text_range(deserializer)); }
+        return ans_;
+         }
+
+@protected String? sse_decode_opt_String(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_String(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected bool? sse_decode_opt_box_autoadd_bool(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_bool(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected Document? sse_decode_opt_box_autoadd_document(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_document(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected double? sse_decode_opt_box_autoadd_f_32(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_f_32(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected TextRange? sse_decode_opt_box_autoadd_text_range(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_text_range(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected int? sse_decode_opt_box_autoadd_u_32(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_u_32(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected BigInt? sse_decode_opt_box_autoadd_u_64(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_u_64(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected int? sse_decode_opt_box_autoadd_u_8(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_u_8(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected BigInt? sse_decode_opt_box_autoadd_usize(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_box_autoadd_usize(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected List<TextRange>? sse_decode_opt_list_text_range(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+            if (sse_decode_bool(deserializer)) {
+                return (sse_decode_list_text_range(deserializer));
+            } else {
+                return null;
+            }
+             }
+
+@protected ScanState sse_decode_scan_state(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_path = sse_decode_String(deserializer);
+var var_mtime = sse_decode_u_64(deserializer);
+var var_size = sse_decode_u_64(deserializer);
+var var_lastScannedAt = sse_decode_u_64(deserializer);
+return ScanState(path: var_path, mtime: var_mtime, size: var_size, lastScannedAt: var_lastScannedAt); }
+
+@protected SearchResponse sse_decode_search_response(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_totalHits = sse_decode_usize(deserializer);
+var var_results = sse_decode_list_search_result(deserializer);
+return SearchResponse(totalHits: var_totalHits, results: var_results); }
+
+@protected SearchResult sse_decode_search_result(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_score = sse_decode_f_32(deserializer);
+var var_doc = sse_decode_document(deserializer);
+var var_snippet = sse_decode_opt_String(deserializer);
+var var_artistSnippet = sse_decode_opt_String(deserializer);
+var var_albumSnippet = sse_decode_opt_String(deserializer);
+var var_fragmentRange = sse_decode_opt_box_autoadd_text_range(deserializer);
+var var_highlightedRanges = sse_decode_opt_list_text_range(deserializer);
+return SearchResult(score: var_score, doc: var_doc, snippet: var_snippet, artistSnippet: var_artistSnippet, albumSnippet: var_albumSnippet, fragmentRange: var_fragmentRange, highlightedRanges: var_highlightedRanges); }
+
+@protected SortOrder sse_decode_sort_order(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var inner = sse_decode_i_32(deserializer);
+        return SortOrder.values[inner]; }
+
+@protected TermSuggestion sse_decode_term_suggestion(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_term = sse_decode_String(deserializer);
+var var_docFreq = sse_decode_u_32(deserializer);
+return TermSuggestion(term: var_term, docFreq: var_docFreq); }
+
+@protected TextRange sse_decode_text_range(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+var var_start = sse_decode_usize(deserializer);
+var var_end = sse_decode_usize(deserializer);
+return TextRange(start: var_start, end: var_end); }
+
+@protected int sse_decode_u_32(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return deserializer.buffer.getUint32(); }
+
+@protected BigInt sse_decode_u_64(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return deserializer.buffer.getBigUint64(); }
+
+@protected int sse_decode_u_8(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return deserializer.buffer.getUint8(); }
+
+@protected void sse_decode_unit(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+ }
+
+@protected BigInt sse_decode_usize(SseDeserializer deserializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+return deserializer.buffer.getBigUint64(); }
+
+@protected void sse_encode_AnyhowException(AnyhowException self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_String(self.message, serializer); }
+
+@protected void sse_encode_String(String self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer); }
+
+@protected void sse_encode_album_info(AlbumInfo self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_String(self.artist, serializer);
+sse_encode_String(self.album, serializer);
+sse_encode_u_64(self.trackCount, serializer);
+ }
+
+@protected void sse_encode_bool(bool self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+serializer.buffer.putUint8(self ? 1 : 0); }
+
+@protected void sse_encode_box_autoadd_bool(bool self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_bool(self, serializer); }
+
+@protected void sse_encode_box_autoadd_document(Document self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_document(self, serializer); }
+
+@protected void sse_encode_box_autoadd_f_32(double self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_f_32(self, serializer); }
+
+@protected void sse_encode_box_autoadd_text_range(TextRange self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_text_range(self, serializer); }
+
+@protected void sse_encode_box_autoadd_u_32(int self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_u_32(self, serializer); }
+
+@protected void sse_encode_box_autoadd_u_64(BigInt self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_u_64(self, serializer); }
+
+@protected void sse_encode_box_autoadd_u_8(int self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_u_8(self, serializer); }
+
+@protected void sse_encode_box_autoadd_usize(BigInt self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_usize(self, serializer); }
+
+@protected void sse_encode_document(Document self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_String(self.path, serializer);
+sse_encode_String(self.uid, serializer);
+sse_encode_String(self.title, serializer);
+sse_encode_String(self.artist, serializer);
+sse_encode_opt_String(self.album, serializer);
+sse_encode_opt_box_autoadd_u_64(self.durationMs, serializer);
+sse_encode_u_64(self.mtime, serializer);
+sse_encode_u_64(self.size, serializer);
+sse_encode_opt_String(self.artworkBase64, serializer);
+sse_encode_u_64(self.lastScannedAt, serializer);
+ }
+
+@protected void sse_encode_f_32(double self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+serializer.buffer.putFloat32(self); }
+
+@protected void sse_encode_i_32(int self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+serializer.buffer.putInt32(self); }
+
+@protected void sse_encode_index_space_usage(IndexSpaceUsage self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_u_64(self.totalBytes, serializer);
+sse_encode_u_64(self.numDocs, serializer);
+sse_encode_usize(self.numSegments, serializer);
+sse_encode_u_64(self.storeBytes, serializer);
+sse_encode_u_64(self.postingsBytes, serializer);
+sse_encode_u_64(self.positionsBytes, serializer);
+sse_encode_u_64(self.fastFieldsBytes, serializer);
+sse_encode_u_64(self.termdictBytes, serializer);
+sse_encode_u_64(self.fieldnormsBytes, serializer);
+sse_encode_u_64(self.deletesBytes, serializer);
+ }
+
+@protected void sse_encode_lenient_search_response(LenientSearchResponse self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_usize(self.totalHits, serializer);
+sse_encode_list_search_result(self.results, serializer);
+sse_encode_list_String(self.errors, serializer);
+ }
+
+@protected void sse_encode_list_String(List<String> self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+        for (final item in self) { sse_encode_String(item, serializer); } }
+
+@protected void sse_encode_list_album_info(List<AlbumInfo> self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+        for (final item in self) { sse_encode_album_info(item, serializer); } }
+
+@protected void sse_encode_list_document(List<Document> self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+        for (final item in self) { sse_encode_document(item, serializer); } }
+
+@protected void sse_encode_list_prim_u_8_strict(Uint8List self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+                    serializer.buffer.putUint8List(self); }
+
+@protected void sse_encode_list_scan_state(List<ScanState> self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+        for (final item in self) { sse_encode_scan_state(item, serializer); } }
+
+@protected void sse_encode_list_search_result(List<SearchResult> self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+        for (final item in self) { sse_encode_search_result(item, serializer); } }
+
+@protected void sse_encode_list_term_suggestion(List<TermSuggestion> self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+        for (final item in self) { sse_encode_term_suggestion(item, serializer); } }
+
+@protected void sse_encode_list_text_range(List<TextRange> self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.length, serializer);
+        for (final item in self) { sse_encode_text_range(item, serializer); } }
+
+@protected void sse_encode_opt_String(String? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_String(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_bool(bool? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_bool(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_document(Document? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_document(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_f_32(double? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_f_32(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_text_range(TextRange? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_text_range(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_u_32(int? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_u_32(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_u_64(BigInt? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_u_64(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_u_8(int? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_u_8(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_box_autoadd_usize(BigInt? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_box_autoadd_usize(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_opt_list_text_range(List<TextRange>? self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+
+                sse_encode_bool(self != null, serializer);
+                if (self != null) {
+                    sse_encode_list_text_range(self, serializer);
+                }
+                 }
+
+@protected void sse_encode_scan_state(ScanState self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_String(self.path, serializer);
+sse_encode_u_64(self.mtime, serializer);
+sse_encode_u_64(self.size, serializer);
+sse_encode_u_64(self.lastScannedAt, serializer);
+ }
+
+@protected void sse_encode_search_response(SearchResponse self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_usize(self.totalHits, serializer);
+sse_encode_list_search_result(self.results, serializer);
+ }
+
+@protected void sse_encode_search_result(SearchResult self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_f_32(self.score, serializer);
+sse_encode_document(self.doc, serializer);
+sse_encode_opt_String(self.snippet, serializer);
+sse_encode_opt_String(self.artistSnippet, serializer);
+sse_encode_opt_String(self.albumSnippet, serializer);
+sse_encode_opt_box_autoadd_text_range(self.fragmentRange, serializer);
+sse_encode_opt_list_text_range(self.highlightedRanges, serializer);
+ }
+
+@protected void sse_encode_sort_order(SortOrder self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_i_32(self.index, serializer); }
+
+@protected void sse_encode_term_suggestion(TermSuggestion self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_String(self.term, serializer);
+sse_encode_u_32(self.docFreq, serializer);
+ }
+
+@protected void sse_encode_text_range(TextRange self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+sse_encode_usize(self.start, serializer);
+sse_encode_usize(self.end, serializer);
+ }
+
+@protected void sse_encode_u_32(int self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+serializer.buffer.putUint32(self); }
+
+@protected void sse_encode_u_64(BigInt self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+serializer.buffer.putBigUint64(self); }
+
+@protected void sse_encode_u_8(int self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+serializer.buffer.putUint8(self); }
+
+@protected void sse_encode_unit(void self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+ }
+
+@protected void sse_encode_usize(BigInt self, SseSerializer serializer){ // Codec=Sse (Serialization based), see doc to use other codecs
+serializer.buffer.putBigUint64(self); }
+                }
+                
